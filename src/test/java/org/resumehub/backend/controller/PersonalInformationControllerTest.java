@@ -37,7 +37,18 @@ public class PersonalInformationControllerTest {
     public void testGetAllPersonalInformation() {
         // Mock data
         List<PersonalInformationDto> personalInformationList = new ArrayList<>();
-        personalInformationList.add(new PersonalInformationDto("1", "John Doe", "Engineer", "ABC Inc", "City1", "Province1", "Country1", "1234567890", "john.doe@example.com", "linkedin.com/johndoe"));
+        personalInformationList.add(new PersonalInformationDto(
+                "1",
+                "John Doe",
+                "Engineer",
+                "ABC Inc",
+                "City1",
+                "Province1",
+                "Country1",
+                "1234567890",
+                "john.doe@example.com",
+                "linkedin.com/johndoe"
+        ));
 
         // Mock service method
         when(personalInformationService.getAllPersonalInformation()).thenReturn(personalInformationList);
@@ -53,7 +64,18 @@ public class PersonalInformationControllerTest {
     @Test
     public void testAddPersonalInformation() {
         // Mock data
-        PersonalInformationDto personalInformationToAdd = new PersonalInformationDto("1", "Jane Doe", "Manager", "XYZ Corp", "City2", "Province2", "Country2", "9876543210", "jane.doe@example.com", "linkedin.com/janedoe");
+        var personalInformationToAdd = new PersonalInformationDto(
+                "1",
+                "Jane Doe",
+                "Manager",
+                "XYZ Corp",
+                "City2",
+                "Province2",
+                "Country2",
+                "9876543210",
+                "jane.doe@example.com",
+                "linkedin.com/janedoe"
+        );
 
         // Mock service method
         when(personalInformationService.savePersonalInformation(any(PersonalInformationDto.class))).thenReturn(personalInformationToAdd);
@@ -81,7 +103,18 @@ public class PersonalInformationControllerTest {
     @Test
     public void testGetPersonalInformationById() {
         // Mock data
-        var personalInformation = new PersonalInformationDto("1", "John Doe", "Engineer", "ABC Inc", "City1", "Province1", "Country1", "1234567890", "john.doe@example.com", "linkedin.com/johndoe");
+        var personalInformation = new PersonalInformationDto(
+                "1",
+                "John Doe",
+                "Engineer",
+                "ABC Inc",
+                "City1",
+                "Province1",
+                "Country1",
+                "1234567890",
+                "john.doe@example.com",
+                "linkedin.com/johndoe"
+        );
 
         // Mocking personalInformationService.getPersonalInformationById(personalInformationId) to return PersonalInformationDto
         when(personalInformationService.getPersonalInformationById(personalInformation.getId())).thenReturn(personalInformation);
@@ -111,7 +144,18 @@ public class PersonalInformationControllerTest {
     public void testUpdatePersonalInformation() {
         // Given
         String personalInformationId = "663d89525a32f82254013cb9";
-        var updatedPersonalInformation = new PersonalInformationDto("1", "John Doe", "Engineer", "ABC Inc", "City1", "Province1", "Country1", "1234567890", "john.doe@example.com", "linkedin.com/johndoe");
+        var updatedPersonalInformation = new PersonalInformationDto(
+                "1",
+                "John Doe",
+                "Engineer",
+                "ABC Inc",
+                "City1",
+                "Province1",
+                "Country1",
+                "1234567890",
+                "john.doe@example.com",
+                "linkedin.com/johndoe"
+        );
 
 
         // When
