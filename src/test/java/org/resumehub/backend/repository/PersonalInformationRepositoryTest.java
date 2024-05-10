@@ -20,7 +20,17 @@ public class PersonalInformationRepositoryTest {
 
     @Before
     public void setup() {
-        personalInformation = new PersonalInformation("1", "John Doe", "Engineer", "ABC Inc", "City1", "Province1", "Country1", "1234567890", "john.doe@example.com", "linkedin.com/johndoe");
+        personalInformation = new PersonalInformation(
+                "1",
+                "John Doe",
+                "Engineer",
+                "ABC Inc",
+                "City1",
+                "Province1",
+                "Country1",
+                "1234567890",
+                "john.doe@example.com",
+                "linkedin.com/johndoe");
         when(personalInformationRepository.findByEmail(personalInformation.getEmail())).thenReturn(personalInformation);
     }
 
