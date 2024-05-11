@@ -9,18 +9,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Document(collection = "personalInformation")
-public class PersonalInformation {
+@Document(collection = "reference")
+public class Reference {
     @Id
     private String id;
     private String userId;
-    private String fullName;
-    private String position;
+    private String name;
     private String company;
-    private String city;
-    private String province;
-    private String country;
-    private String mobile;
     private String email;
-    private String linkedIn;
+    private String mobile;
 }

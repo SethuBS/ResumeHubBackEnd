@@ -22,11 +22,17 @@ import static org.mockito.Mockito.*;
 
 public class WorkExperienceControllerTest {
 
-    @Mock
-    WorkExperienceService workExperienceService;
+    List<String> skills = Arrays.asList(
+            "Java",
+            "Microservices",
+            "Spring Framework",
+            "MongoDB",
+            "Jenkins",
+            "Github"
 
-    @InjectMocks
-    WorkExperienceController workExperienceController;
+    );
+    @Mock
+    private WorkExperienceService workExperienceService;
 
     List<String> responsibilities = Arrays.asList(
             "Executed full software development life cycle (SDLC).",
@@ -41,8 +47,11 @@ public class WorkExperienceControllerTest {
             "Complied with project plans and industry standards.",
             "Ensured software was updated with latest features."
     );
+    @InjectMocks
+    private WorkExperienceController workExperienceController;
 
     @BeforeEach
+    @Deprecated
     public void setup() {
         MockitoAnnotations.initMocks(this);
     }
@@ -53,6 +62,7 @@ public class WorkExperienceControllerTest {
         List<WorkExperienceDto> workExperienceDtoList = new ArrayList<>();
         workExperienceDtoList.add(new WorkExperienceDto(
                 "663d89525a32f82254013cb9",
+                "663fb95b364adc66334cb83a",
                 "Gumtree South Africa",
                 "Intermediate Backend Engineer",
                 "July 2023",
@@ -60,7 +70,8 @@ public class WorkExperienceControllerTest {
                 "Cape Town",
                 "Western Cape",
                 "South Africa",
-                responsibilities
+                responsibilities,
+                skills
         ));
 
         // Mock service method
@@ -80,6 +91,7 @@ public class WorkExperienceControllerTest {
         // Mock data
         var workExperience = new WorkExperienceDto(
                 "663d89525a32f82254013cb9",
+                "663fb95b364adc66334cb83a",
                 "Gumtree South Africa",
                 "Intermediate Backend Engineer",
                 "July 2023",
@@ -87,7 +99,8 @@ public class WorkExperienceControllerTest {
                 "Cape Town",
                 "Western Cape",
                 "South Africa",
-                responsibilities
+                responsibilities,
+                skills
         );
 
         // Mocking workExperienceService.getWorkExperienceById(workExperienceId) to return WorkExperienceDto
@@ -119,6 +132,7 @@ public class WorkExperienceControllerTest {
         // Mock data
         var workExperience = new WorkExperienceDto(
                 "663d89525a32f82254013cb9",
+                "663fb95b364adc66334cb83a",
                 "Gumtree South Africa",
                 "Intermediate Backend Engineer",
                 "July 2023",
@@ -126,7 +140,8 @@ public class WorkExperienceControllerTest {
                 "Cape Town",
                 "Western Cape",
                 "South Africa",
-                responsibilities
+                responsibilities,
+                skills
         );
 
         // Mock service method
@@ -146,6 +161,7 @@ public class WorkExperienceControllerTest {
         String workExperienceId = "663d89525a32f82254013cb9";
         var updatedWorkExperience = new WorkExperienceDto(
                 "663d89525a32f82254013cb9",
+                "663fb95b364adc66334cb83a",
                 "Gumtree South Africa",
                 "Intermediate Backend Engineer",
                 "July 2023",
@@ -153,7 +169,8 @@ public class WorkExperienceControllerTest {
                 "Cape Town",
                 "Western Cape",
                 "South Africa",
-                responsibilities
+                responsibilities,
+                skills
         );
 
 

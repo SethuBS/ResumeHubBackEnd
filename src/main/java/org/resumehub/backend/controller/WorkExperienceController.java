@@ -12,7 +12,7 @@ import java.util.List;
 @CrossOrigin("*")
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/v1/workExperience")
+@RequestMapping("/api/v1/workExperience/")
 public class WorkExperienceController {
 
     private final WorkExperienceService workExperienceService;
@@ -27,7 +27,7 @@ public class WorkExperienceController {
         return ResponseEntity.ok(workExperienceService.getWorkExperienceById(workExperienceId));
     }
 
-    @PutMapping
+    @PostMapping
     public ResponseEntity<WorkExperienceDto> saveWorkExperience(@Validated @RequestBody WorkExperienceDto workExperience) {
         return ResponseEntity.ok(workExperienceService.saveWorkExperience(workExperience));
     }

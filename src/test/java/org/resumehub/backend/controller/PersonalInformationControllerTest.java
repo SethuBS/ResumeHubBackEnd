@@ -29,6 +29,7 @@ public class PersonalInformationControllerTest {
     private PersonalInformationController personalInformationController;
 
     @BeforeEach
+    @Deprecated
     public void setup() {
         MockitoAnnotations.initMocks(this);
     }
@@ -39,6 +40,7 @@ public class PersonalInformationControllerTest {
         List<PersonalInformationDto> personalInformationList = new ArrayList<>();
         personalInformationList.add(new PersonalInformationDto(
                 "1",
+                "663fb95b364adc66334cb83a",
                 "John Doe",
                 "Engineer",
                 "ABC Inc",
@@ -66,6 +68,7 @@ public class PersonalInformationControllerTest {
         // Mock data
         var personalInformationToAdd = new PersonalInformationDto(
                 "1",
+                "663fb95b364adc66334cb83a",
                 "Jane Doe",
                 "Manager",
                 "XYZ Corp",
@@ -91,10 +94,21 @@ public class PersonalInformationControllerTest {
     @Test
     public void testSavePersonalInformation_ResourceAlreadyExists() {
         // Mock data
-        PersonalInformationDto existingPersonalInformation = new PersonalInformationDto("1", "John Doe", "Engineer", "ABC Inc", "City1", "Province1", "Country1", "1234567890", "john.doe@example.com", "linkedin.com/johndoe");
+        PersonalInformationDto existingPersonalInformation = new PersonalInformationDto(
+                "1",
+                "663fb95b364adc66334cb83a",
+                "John Doe",
+                "Engineer",
+                "ABC Inc",
+                "City1",
+                "Province1",
+                "Country1",
+                "1234567890",
+                "john.doe@example.com",
+                "linkedin.com/johndoe");
 
         // Mock the personalInformationService's savePersonalInformation method to throw a ResourceAlreadyExistsException
-        when(personalInformationService.savePersonalInformation(any(PersonalInformationDto.class))).thenThrow(new ResourceAlreadyExistsException("User with given email address: " + existingPersonalInformation.getEmail() + " does not exist"));
+        when(personalInformationService.savePersonalInformation(any(PersonalInformationDto.class))).thenThrow(new ResourceAlreadyExistsException("User with given email address: " + existingPersonalInformation.getEmail() + " already exists in the system"));
 
         // Verify that the exception is thrown
         assertThrows(ResourceAlreadyExistsException.class, () -> personalInformationController.addPersonalInformation(existingPersonalInformation));
@@ -105,6 +119,7 @@ public class PersonalInformationControllerTest {
         // Mock data
         var personalInformation = new PersonalInformationDto(
                 "1",
+                "663fb95b364adc66334cb83a",
                 "John Doe",
                 "Engineer",
                 "ABC Inc",
@@ -146,6 +161,7 @@ public class PersonalInformationControllerTest {
         String personalInformationId = "663d89525a32f82254013cb9";
         var updatedPersonalInformation = new PersonalInformationDto(
                 "1",
+                "663fb95b364adc66334cb83a",
                 "John Doe",
                 "Engineer",
                 "ABC Inc",

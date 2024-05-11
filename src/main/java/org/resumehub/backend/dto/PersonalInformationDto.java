@@ -4,18 +4,18 @@ package org.resumehub.backend.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class PersonalInformationDto {
 
     private String id;
+    @NotNull
+    private String userId;
     @NotNull
     private String fullName;
     @NotNull

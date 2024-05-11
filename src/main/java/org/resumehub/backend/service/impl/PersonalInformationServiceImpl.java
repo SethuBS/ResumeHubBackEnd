@@ -25,9 +25,11 @@ public class PersonalInformationServiceImpl implements PersonalInformationServic
 
     @Override
     public List<PersonalInformationDto> getAllPersonalInformation() {
-        return personalInformationRepository.findAll()
+        var listOfPersonalInformation = personalInformationRepository.findAll()
                 .stream().map(Mapper::mapToDto)
                 .collect(Collectors.toList());
+        logger.info("List of personal information :{}", listOfPersonalInformation);
+        return listOfPersonalInformation;
     }
 
     @Override
@@ -44,7 +46,7 @@ public class PersonalInformationServiceImpl implements PersonalInformationServic
 
         var personalInformationToSave = Mapper.mapToEntity(personalInformation);
         var savedPersonalInformation = personalInformationRepository.save(personalInformationToSave);
-        logger.info("Added Personal Information: {}", savedPersonalInformation.toString());
+        logger.info("Saved record of Personal Information: {}", savedPersonalInformation.toString());
         return Mapper.mapToDto(savedPersonalInformation);
     }
 
@@ -52,6 +54,7 @@ public class PersonalInformationServiceImpl implements PersonalInformationServic
     public PersonalInformationDto getPersonalInformationById(String personalInformationId) {
         var personalInformation = personalInformationRepository.findById(personalInformationId)
                 .orElseThrow(() -> new ResourceNotFoundException("Personal Information with given id: " + personalInformationId + " does not exist"));
+        logger.info("One record of personal information: {}", personalInformation);
         return Mapper.mapToDto(personalInformation);
     }
 
@@ -60,6 +63,7 @@ public class PersonalInformationServiceImpl implements PersonalInformationServic
         var personalInformation = personalInformationRepository.findById(personalInformationId)
                 .orElseThrow(() -> new ResourceNotFoundException("Personal Information with given id: " + personalInformationId + " does not exist"));
 
+        personalInformation.setUserId(updatedPersonalInformation.getUserId());
         personalInformation.setFullName(updatedPersonalInformation.getFullName());
         personalInformation.setCompany(updatedPersonalInformation.getCompany());
         personalInformation.setCity(updatedPersonalInformation.getCity());
@@ -69,6 +73,7 @@ public class PersonalInformationServiceImpl implements PersonalInformationServic
         personalInformation.setEmail(updatedPersonalInformation.getEmail());
         personalInformation.setLinkedIn(updatedPersonalInformation.getLinkedIn());
         personalInformationRepository.save(personalInformation);
+        logger.info("Updated record of personal information: {}", personalInformation);
         return Mapper.mapToDto(personalInformation);
     }
 
@@ -76,6 +81,7 @@ public class PersonalInformationServiceImpl implements PersonalInformationServic
     public void deletePersonalInformation(String personalInformationId) {
         personalInformationRepository.findById(personalInformationId)
                 .orElseThrow(() -> new ResourceNotFoundException("Personal Information with given id: " + personalInformationId + " does not exist"));
+        logger.info("Deleted record of personal information: {}", personalInformationRepository.findById(personalInformationId));
         personalInformationRepository.deleteById(personalInformationId);
     }
 }

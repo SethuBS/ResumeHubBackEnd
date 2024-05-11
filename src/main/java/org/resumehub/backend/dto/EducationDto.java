@@ -3,34 +3,24 @@ package org.resumehub.backend.dto;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class WorkExperienceDto {
+public class EducationDto {
 
     private String id;
     @NotNull
     private String userId;
     @NotNull
-    private String companyName;
+    private String institution;
     @NotNull
-    private String position;
+    private String degree;
+    @NotNull
+    private String fieldOfStudy;
     @NotNull
     private String startDate;
     @NotNull
     private String endDate;
-    @NotNull
-    private String city;
-    @NotNull
-    private String province;
-    @NotNull
-    private String country;
-    @NotNull
-    private List<String> responsibilities;
-    @NotNull
-    private List<String> skills;
 }
