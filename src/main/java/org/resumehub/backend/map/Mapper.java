@@ -118,6 +118,7 @@ public class Mapper {
     public static UserDTO mapToDto(User user) {
         return new UserDTO(
                 user.getId(),
+                user.getFullName(),
                 user.getEmail(),
                 user.getPassword(),
                 user.getRole()
@@ -127,6 +128,7 @@ public class Mapper {
     public static User mapToEntity(UserDTO userDto) {
         return new User(
                 userDto.getId(),
+                userDto.getFullName(),
                 userDto.getEmail(),
                 userDto.getPassword(),
                 userDto.getRole()
@@ -136,6 +138,7 @@ public class Mapper {
     public static User mapToEntity(LoginDTO loginDTO) {
         return new User(
                 loginDTO.getId(),
+                loginDTO.getFullName(),
                 loginDTO.getEmail(),
                 loginDTO.getPassword(),
                 loginDTO.getRole()

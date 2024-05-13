@@ -3,6 +3,7 @@ package org.resumehub.backend.service.impl;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.resumehub.backend.EmailConfig.EmailConfiguration;
 import org.resumehub.backend.SecurityConfig.JwtProvider;
 import org.resumehub.backend.dto.LoginDTO;
 import org.resumehub.backend.dto.UserDTO;
@@ -12,6 +13,7 @@ import org.resumehub.backend.exception.ResourceNotFoundException;
 import org.resumehub.backend.map.Mapper;
 import org.resumehub.backend.repository.UserRepository;
 import org.resumehub.backend.response.AuthResponse;
+import org.resumehub.backend.service.EmailService;
 import org.resumehub.backend.service.UserService;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,6 +40,10 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     private PasswordEncoder passwordEncoder;
+
+    private final EmailConfiguration emailConfiguration;
+
+    private final EmailService emailService;
 
 
     private UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -148,6 +154,8 @@ public class UserServiceImpl implements UserService {
         userToBeAdded.setPassword(encodedPassword);
         userToBeAdded.setRole(userRole);
         var addedUser = userRepository.save(userToBeAdded);
+        // Welcome email
+        emailService.sendEmail(addedUser.getEmail(), emailConfiguration.getEmailSubject(), addedUser.getFullName(), emailConfiguration.getEmailBody());
         Authentication authentication = new UsernamePasswordAuthenticationToken(addedUser.getEmail(), addedUser.getEmail());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         var token = JwtProvider.generateToken(authentication);
@@ -170,6 +178,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User with given id: " + userId + " does not exist in the system"));
         var encodedPassword = updatedUser.getPassword();
         var userRole = UserRole.ADMIN.getRole();
+        oneRecordOfExistingUser.setFullName(updatedUser.getFullName());
         oneRecordOfExistingUser.setEmail(updatedUser.getEmail());
         oneRecordOfExistingUser.setPassword(updatedUser.getPassword());
         oneRecordOfExistingUser.setRole(userRole);

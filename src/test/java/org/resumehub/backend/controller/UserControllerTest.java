@@ -8,7 +8,6 @@ import org.mockito.MockitoAnnotations;
 import org.resumehub.backend.dto.UserDTO;
 import org.resumehub.backend.exception.ResourceAlreadyExistsException;
 import org.resumehub.backend.exception.ResourceNotFoundException;
-import org.resumehub.backend.repository.UserRepository;
 import org.resumehub.backend.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +41,7 @@ public class UserControllerTest {
         String jwt = "sampleJwtToken";
         var expectedUserProfile = new UserDTO(
                 "663fb95b364adc66334cb83a",
+                "Sethu Serge Budaza",
                 "sethuserge@gmail.com",
                 "sethuserge@gmail.com",
                 "ROLE_CUSTOMER"
@@ -61,6 +61,7 @@ public class UserControllerTest {
         List<UserDTO> userDTOList = new ArrayList<>();
         userDTOList.add(new UserDTO(
                 "663fb95b364adc66334cb83a",
+                "Sethu Serge Budaza",
                 "sethuserge@gmail.com",
                 "sethuserge@gmail.com",
                 "ROLE_CUSTOMER"
@@ -82,6 +83,7 @@ public class UserControllerTest {
         // Mock Data
         var user = new UserDTO(
                 "663fb95b364adc66334cb83a",
+                "Sethu Serge Budaza",
                 "sethuserge@gmail.com",
                 "sethuserge@gmail.com",
                 "ROLE_CUSTOMER"
@@ -116,6 +118,7 @@ public class UserControllerTest {
         // Mock Data
         var user = new UserDTO(
                 "663fb95b364adc66334cb83a",
+                "Sethu Serge Budaza",
                 "sethuserge@gmail.com",
                 "sethuserge@gmail.com",
                 "ROLE_CUSTOMER"
@@ -134,6 +137,7 @@ public class UserControllerTest {
         // Mock Data
         var user = new UserDTO(
                 "663fb95b364adc66334cb83a",
+                "Sethu Serge Budaza",
                 "sethuserge@gmail.com",
                 "sethuserge@gmail.com",
                 "ROLE_CUSTOMER"
@@ -152,6 +156,7 @@ public class UserControllerTest {
         String userId = "663d89525a32f82254013cb9";
         var user = new UserDTO(
                 "663fb95b364adc66334cb83a",
+                "Sethu Serge Budaza",
                 "sethuserge@gmail.com",
                 "sethuserge@gmail.com",
                 "ROLE_CUSTOMER"

@@ -26,6 +26,7 @@ public class UserRepositoryTest {
         // Mock Data
         user = new User(
                 "663fb95b364adc66334cb83a",
+                "Sethu Serge Budaz",
                 "sethuserge@gmail.com",
                 "sethuserge@gmail.com",
                 "USER"

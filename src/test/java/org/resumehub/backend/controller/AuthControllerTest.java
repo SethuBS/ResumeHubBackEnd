@@ -30,6 +30,7 @@ public class AuthControllerTest {
         // Given
         var userDTO = new UserDTO(
                 "663f8e6381558e20f3bb2522",
+                "Sethu Serge Budaz",
                 "test@example.com",
                 "password",
                 "ROLE_CUSTOMER"
@@ -49,6 +50,7 @@ public class AuthControllerTest {
         // Given
         var loginDTO = new LoginDTO(
                 "663f8e6381558e20f3bb2522",
+                "Sethu Serge Budaz",
                 "test@example.com",
                 "password",
                 "ROLE_CUSTOMER"
