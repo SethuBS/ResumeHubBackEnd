@@ -18,28 +18,32 @@ public class ReferenceController {
     private final ReferenceService referenceService;
 
     @GetMapping
-    public ResponseEntity<List<ReferenceDTO>> getAllReferences() {
+    public ResponseEntity<List<ReferenceDTO>> getAllReferences(@RequestHeader("Authorization") String jwt) {
         return ResponseEntity.ok(referenceService.getAllReferences());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ReferenceDTO> getReferenceById(@Validated @PathVariable("id") String referenceId) {
+    public ResponseEntity<ReferenceDTO> getReferenceById(@Validated @RequestHeader("Authorization") String jwt,
+                                                         @PathVariable("id") String referenceId) {
         return ResponseEntity.ok(referenceService.getReferenceById(referenceId));
     }
 
     @PostMapping
-    public ResponseEntity<ReferenceDTO> createNewReference(@Validated @RequestBody ReferenceDTO newReference) {
+    public ResponseEntity<ReferenceDTO> createNewReference(@Validated @RequestHeader("Authorization") String jwt,
+                                                           @RequestBody ReferenceDTO newReference) {
         return ResponseEntity.ok(referenceService.createNewReference(newReference));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<ReferenceDTO> updateReference(@Validated @PathVariable("id") String referenceId,
+    public ResponseEntity<ReferenceDTO> updateReference(@Validated @RequestHeader("Authorization") String jwt,
+                                                        @PathVariable("id") String referenceId,
                                                         @RequestBody ReferenceDTO updatedReference) {
         return ResponseEntity.ok(referenceService.updateReference(referenceId, updatedReference));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteReference(@Validated @PathVariable("id") String referenceId) {
+    public ResponseEntity<String> deleteReference(@Validated @RequestHeader("Authorization") String jwt,
+                                                  @PathVariable("id") String referenceId) {
         referenceService.deleteReference(referenceId);
         return ResponseEntity.ok("Reference deleted successful");
     }

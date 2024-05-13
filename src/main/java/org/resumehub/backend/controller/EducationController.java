@@ -18,28 +18,29 @@ public class EducationController {
     private final EducationService educationService;
 
     @GetMapping
-    public ResponseEntity<List<EducationDTO>> getAllEducation() {
+    public ResponseEntity<List<EducationDTO>> getAllEducation(@RequestHeader("Authorization") String jwt) {
         return ResponseEntity.ok(educationService.getAllEducation());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<EducationDTO> getEducationById(@Validated @PathVariable("id") String educationId) {
+    public ResponseEntity<EducationDTO> getEducationById(@Validated @RequestHeader("Authorization") String jwt, @PathVariable("id") String educationId) {
         return ResponseEntity.ok(educationService.getEducationById(educationId));
     }
 
     @PostMapping
-    public ResponseEntity<EducationDTO> createEducation(@Validated @RequestBody EducationDTO newEducation) {
+    public ResponseEntity<EducationDTO> createEducation(@Validated @RequestHeader("Authorization") String jwt, @RequestBody EducationDTO newEducation) {
         return ResponseEntity.ok(educationService.createEducation(newEducation));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<EducationDTO> updateEducation(@Validated @PathVariable("id")
+    public ResponseEntity<EducationDTO> updateEducation(@Validated @RequestHeader("Authorization") String jwt,
+                                                        @PathVariable("id")
                                                         @RequestBody String educationId, EducationDTO updatedEducation) {
         return ResponseEntity.ok(educationService.updateEducation(educationId, updatedEducation));
     }
 
     @DeleteMapping("{id}")
-    ResponseEntity<String> deleteEducation(@Validated @PathVariable("id") String educationId) {
+    ResponseEntity<String> deleteEducation(@Validated @RequestHeader("Authorization") String jwt, @PathVariable("id") String educationId) {
         educationService.deleteEducation(educationId);
         return ResponseEntity.ok("Education deleted successful");
     }

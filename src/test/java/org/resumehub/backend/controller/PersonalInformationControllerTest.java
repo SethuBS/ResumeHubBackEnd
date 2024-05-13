@@ -28,6 +28,9 @@ public class PersonalInformationControllerTest {
     @InjectMocks
     private PersonalInformationController personalInformationController;
 
+    private final String authorization = "eyJhbGciOiJIUzM4NCJ9.eyJpYXQiOjE3MTU1NTA3OTEsImV4cCI6MTcxNTYzNzE5MSwiZW1haWwiOiJzZXRodXNlcmdlQHlhaG9vLmNvbSIsImF1dGhvcml0aWVzIjoiIn0.lGi6KXPSEmlrpSUaAEpWc6nbek8idH_JXUpMIDDmZ72QmGzVPqJXHgJW4hPlpt3Z";
+
+
     @BeforeEach
     @Deprecated
     public void setup() {
@@ -56,7 +59,7 @@ public class PersonalInformationControllerTest {
         when(personalInformationService.getAllPersonalInformation()).thenReturn(personalInformationList);
 
         // Call controller method
-        ResponseEntity<List<PersonalInformationDTO>> response = personalInformationController.getAllPersonalInformation();
+        ResponseEntity<List<PersonalInformationDTO>> response = personalInformationController.getAllPersonalInformation(authorization);
 
         // Verify the response
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -84,7 +87,7 @@ public class PersonalInformationControllerTest {
         when(personalInformationService.savePersonalInformation(any(PersonalInformationDTO.class))).thenReturn(personalInformationToAdd);
 
         // Call controller method
-        ResponseEntity<PersonalInformationDTO> response = personalInformationController.addPersonalInformation(personalInformationToAdd);
+        ResponseEntity<PersonalInformationDTO> response = personalInformationController.addPersonalInformation(authorization, personalInformationToAdd);
 
         // Verify the response
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -111,7 +114,7 @@ public class PersonalInformationControllerTest {
         when(personalInformationService.savePersonalInformation(any(PersonalInformationDTO.class))).thenThrow(new ResourceAlreadyExistsException("User with given email address: " + existingPersonalInformation.getEmail() + " already exists in the system"));
 
         // Verify that the exception is thrown
-        assertThrows(ResourceAlreadyExistsException.class, () -> personalInformationController.addPersonalInformation(existingPersonalInformation));
+        assertThrows(ResourceAlreadyExistsException.class, () -> personalInformationController.addPersonalInformation(authorization, existingPersonalInformation));
     }
 
     @Test
@@ -135,7 +138,7 @@ public class PersonalInformationControllerTest {
         when(personalInformationService.getPersonalInformationById(personalInformation.getId())).thenReturn(personalInformation);
 
         // Call the Controller method
-        ResponseEntity<PersonalInformationDTO> personalInformationDtoResponseEntity = personalInformationController.getPersonalInformationById(personalInformation.getId());
+        ResponseEntity<PersonalInformationDTO> personalInformationDtoResponseEntity = personalInformationController.getPersonalInformationById(authorization, personalInformation.getId());
 
         // Verify the response entity
         assertEquals(HttpStatus.OK, personalInformationDtoResponseEntity.getStatusCode());
@@ -151,7 +154,7 @@ public class PersonalInformationControllerTest {
         when(personalInformationService.getPersonalInformationById(personalInformationId)).thenThrow(new ResourceNotFoundException("User not found"));
 
         // Call the controller method and assert that ResourceNotFundException is thrown
-        assertThrows(ResourceNotFoundException.class, () -> personalInformationController.getPersonalInformationById(personalInformationId));
+        assertThrows(ResourceNotFoundException.class, () -> personalInformationController.getPersonalInformationById(authorization, personalInformationId));
 
     }
 
@@ -178,7 +181,7 @@ public class PersonalInformationControllerTest {
         when(personalInformationService.updatePersonalInformation(personalInformationId, updatedPersonalInformation)).thenReturn(new PersonalInformationDTO());
 
         // Then
-        ResponseEntity<PersonalInformationDTO> response = personalInformationController.updatePersonalInformation(personalInformationId, updatedPersonalInformation);
+        ResponseEntity<PersonalInformationDTO> response = personalInformationController.updatePersonalInformation(authorization, personalInformationId, updatedPersonalInformation);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
@@ -192,7 +195,7 @@ public class PersonalInformationControllerTest {
         when(personalInformationService.updatePersonalInformation(personalInformationId, updatedPersonalInformation)).thenThrow(new ResourceNotFoundException("Resource not found"));
 
         // Then
-        assertThrows(ResourceNotFoundException.class, () -> personalInformationController.updatePersonalInformation(personalInformationId, updatedPersonalInformation));
+        assertThrows(ResourceNotFoundException.class, () -> personalInformationController.updatePersonalInformation(authorization, personalInformationId, updatedPersonalInformation));
     }
 
     @Test
@@ -201,7 +204,7 @@ public class PersonalInformationControllerTest {
         String personalInformationId = "663d89525a32f82254013cb9";
 
         // When
-        ResponseEntity<String> stringResponseEntity = personalInformationController.deletePersonalInformation(personalInformationId);
+        ResponseEntity<String> stringResponseEntity = personalInformationController.deletePersonalInformation(authorization, personalInformationId);
 
         // Then
         assertEquals(HttpStatus.OK, stringResponseEntity.getStatusCode());

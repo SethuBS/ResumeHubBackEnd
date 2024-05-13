@@ -27,6 +27,9 @@ public class ReferenceControllerTest {
     @InjectMocks
     private ReferenceController referenceController;
 
+    private final String authorization = "eyJhbGciOiJIUzM4NCJ9.eyJpYXQiOjE3MTU1NTA3OTEsImV4cCI6MTcxNTYzNzE5MSwiZW1haWwiOiJzZXRodXNlcmdlQHlhaG9vLmNvbSIsImF1dGhvcml0aWVzIjoiIn0.lGi6KXPSEmlrpSUaAEpWc6nbek8idH_JXUpMIDDmZ72QmGzVPqJXHgJW4hPlpt3Z";
+
+
     @BeforeEach
     @Deprecated
     public void setup() {
@@ -50,7 +53,7 @@ public class ReferenceControllerTest {
         when(referenceService.getAllReferences()).thenReturn(referenceDTOList);
 
         // Call controller method
-        ResponseEntity<List<ReferenceDTO>> response = referenceController.getAllReferences();
+        ResponseEntity<List<ReferenceDTO>> response = referenceController.getAllReferences(authorization);
 
         // Verify the response
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -73,7 +76,7 @@ public class ReferenceControllerTest {
         when(referenceService.getReferenceById(referenceDto.getId())).thenReturn(referenceDto);
 
         // Call the Controller method
-        ResponseEntity<ReferenceDTO> referenceDtoResponseEntity = referenceController.getReferenceById(referenceDto.getId());
+        ResponseEntity<ReferenceDTO> referenceDtoResponseEntity = referenceController.getReferenceById(authorization, referenceDto.getId());
 
         // Verify the response entity
         assertEquals(HttpStatus.OK, referenceDtoResponseEntity.getStatusCode());
@@ -89,7 +92,7 @@ public class ReferenceControllerTest {
         when(referenceService.getReferenceById(referenceId)).thenThrow(new ResourceNotFoundException("Reference Experience not found"));
 
         // Call the controller method and assert that ResourceNotFundException is thrown
-        assertThrows(ResourceNotFoundException.class, () -> referenceController.getReferenceById(referenceId));
+        assertThrows(ResourceNotFoundException.class, () -> referenceController.getReferenceById(authorization, referenceId));
 
     }
 
@@ -109,7 +112,7 @@ public class ReferenceControllerTest {
         when(referenceService.createNewReference(any(ReferenceDTO.class))).thenReturn(referenceDto);
 
         // Call controller method
-        ResponseEntity<ReferenceDTO> response = referenceController.createNewReference(referenceDto);
+        ResponseEntity<ReferenceDTO> response = referenceController.createNewReference(authorization, referenceDto);
 
         // Verify the response
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -135,7 +138,7 @@ public class ReferenceControllerTest {
         when(referenceService.updateReference(referenceId, referenceDto)).thenReturn(new ReferenceDTO());
 
         // Then
-        ResponseEntity<ReferenceDTO> response = referenceController.updateReference(referenceId, referenceDto);
+        ResponseEntity<ReferenceDTO> response = referenceController.updateReference(authorization, referenceId, referenceDto);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
@@ -149,7 +152,7 @@ public class ReferenceControllerTest {
         when(referenceService.updateReference(referenceId, updatedReference)).thenThrow(new ResourceNotFoundException("Resource not found"));
 
         // Then
-        assertThrows(ResourceNotFoundException.class, () -> referenceController.updateReference(referenceId, updatedReference));
+        assertThrows(ResourceNotFoundException.class, () -> referenceController.updateReference(authorization, referenceId, updatedReference));
     }
 
     @Test
@@ -158,7 +161,7 @@ public class ReferenceControllerTest {
         String referenceId = "663d89525a32f82254013cb9";
 
         // When
-        ResponseEntity<String> stringResponseEntity = referenceController.deleteReference(referenceId);
+        ResponseEntity<String> stringResponseEntity = referenceController.deleteReference(authorization, referenceId);
 
         // Then
         assertEquals(HttpStatus.OK, stringResponseEntity.getStatusCode());

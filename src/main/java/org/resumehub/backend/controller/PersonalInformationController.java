@@ -19,28 +19,32 @@ public class PersonalInformationController {
     private final PersonalInformationService personalInformationService;
 
     @GetMapping
-    public ResponseEntity<List<PersonalInformationDTO>> getAllPersonalInformation() {
+    public ResponseEntity<List<PersonalInformationDTO>> getAllPersonalInformation(@RequestHeader("Authorization") String jwt) {
         return ResponseEntity.ok(personalInformationService.getAllPersonalInformation());
     }
 
     @PostMapping
-    public ResponseEntity<PersonalInformationDTO> addPersonalInformation(@Validated @RequestBody PersonalInformationDTO personalInformation) {
+    public ResponseEntity<PersonalInformationDTO> addPersonalInformation(@Validated @RequestHeader("Authorization") String jwt,
+                                                                         @RequestBody PersonalInformationDTO personalInformation) {
         return ResponseEntity.ok(personalInformationService.savePersonalInformation(personalInformation));
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<PersonalInformationDTO> getPersonalInformationById(@Validated @PathVariable("id") String personalInformationId) {
+    public ResponseEntity<PersonalInformationDTO> getPersonalInformationById(@Validated @RequestHeader("Authorization") String jwt,
+                                                                             @PathVariable("id") String personalInformationId) {
         return ResponseEntity.ok(personalInformationService.getPersonalInformationById(personalInformationId));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<PersonalInformationDTO> updatePersonalInformation(@Validated @PathVariable("id") String personalInformationId,
+    public ResponseEntity<PersonalInformationDTO> updatePersonalInformation(@Validated @RequestHeader("Authorization") String jwt,
+                                                                            @PathVariable("id") String personalInformationId,
                                                                             @RequestBody PersonalInformationDTO updatedPersonalInformation) {
         return ResponseEntity.ok(personalInformationService.updatePersonalInformation(personalInformationId, updatedPersonalInformation));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<String> deletePersonalInformation(@Validated @PathVariable("id") String personalInformationId) {
+    public ResponseEntity<String> deletePersonalInformation(@Validated @RequestHeader("Authorization") String jwt,
+                                                            @PathVariable("id") String personalInformationId) {
         personalInformationService.deletePersonalInformation(personalInformationId);
         return ResponseEntity.ok("Personal Information deleted successful");
     }

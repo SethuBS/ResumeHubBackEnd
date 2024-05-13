@@ -27,6 +27,8 @@ public class EducationControllerTest {
     @InjectMocks
     private EducationController educationController;
 
+    private final String authorization = "eyJhbGciOiJIUzM4NCJ9.eyJpYXQiOjE3MTU1NTA3OTEsImV4cCI6MTcxNTYzNzE5MSwiZW1haWwiOiJzZXRodXNlcmdlQHlhaG9vLmNvbSIsImF1dGhvcml0aWVzIjoiIn0.lGi6KXPSEmlrpSUaAEpWc6nbek8idH_JXUpMIDDmZ72QmGzVPqJXHgJW4hPlpt3Z";
+
     @BeforeEach
     @Deprecated
     public void setup() {
@@ -51,7 +53,7 @@ public class EducationControllerTest {
         when(educationService.getAllEducation()).thenReturn(educationDTOList);
 
         // Call controller method
-        ResponseEntity<List<EducationDTO>> response = educationController.getAllEducation();
+        ResponseEntity<List<EducationDTO>> response = educationController.getAllEducation(authorization);
 
         // Verify the response
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -76,7 +78,7 @@ public class EducationControllerTest {
         when(educationService.getEducationById(existingEducation.getId())).thenReturn(existingEducation);
 
         // Call the Controller method
-        ResponseEntity<EducationDTO> educationDtoResponseEntity = educationController.getEducationById(existingEducation.getId());
+        ResponseEntity<EducationDTO> educationDtoResponseEntity = educationController.getEducationById(authorization, existingEducation.getId());
 
         // Verify the response entity
         assertEquals(HttpStatus.OK, educationDtoResponseEntity.getStatusCode());
@@ -92,7 +94,7 @@ public class EducationControllerTest {
         when(educationService.getEducationById(educationId)).thenThrow(new ResourceNotFoundException("Education not found"));
 
         // Call the controller method and assert that ResourceNotFundException is thrown
-        assertThrows(ResourceNotFoundException.class, () -> educationController.getEducationById(educationId));
+        assertThrows(ResourceNotFoundException.class, () -> educationController.getEducationById(authorization, educationId));
 
     }
 
@@ -113,7 +115,7 @@ public class EducationControllerTest {
         when(educationService.createEducation(any(EducationDTO.class))).thenReturn(newEducation);
 
         // Call controller method
-        ResponseEntity<EducationDTO> response = educationController.createEducation(newEducation);
+        ResponseEntity<EducationDTO> response = educationController.createEducation(authorization, newEducation);
 
         // Verify the response
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -139,7 +141,7 @@ public class EducationControllerTest {
         when(educationService.updateEducation(educationId, updatedEducation)).thenReturn(new EducationDTO());
 
         // Then
-        ResponseEntity<EducationDTO> response = educationController.updateEducation(educationId, updatedEducation);
+        ResponseEntity<EducationDTO> response = educationController.updateEducation(authorization, educationId, updatedEducation);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
@@ -153,7 +155,7 @@ public class EducationControllerTest {
         when(educationService.updateEducation(educationId, updatedEducation)).thenThrow(new ResourceNotFoundException("Resource not found"));
 
         // Then
-        assertThrows(ResourceNotFoundException.class, () -> educationController.updateEducation(educationId, updatedEducation));
+        assertThrows(ResourceNotFoundException.class, () -> educationController.updateEducation(authorization, educationId, updatedEducation));
     }
 
     @Test
@@ -162,7 +164,7 @@ public class EducationControllerTest {
         String educationId = "663d89525a32f82254013cb9";
 
         // When
-        ResponseEntity<String> stringResponseEntity = educationController.deleteEducation(educationId);
+        ResponseEntity<String> stringResponseEntity = educationController.deleteEducation(authorization, educationId);
 
         // Then
         assertEquals(HttpStatus.OK, stringResponseEntity.getStatusCode());

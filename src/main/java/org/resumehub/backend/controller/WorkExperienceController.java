@@ -18,28 +18,32 @@ public class WorkExperienceController {
     private final WorkExperienceService workExperienceService;
 
     @GetMapping
-    public ResponseEntity<List<WorkExperienceDTO>> getAllWorkExperience() {
+    public ResponseEntity<List<WorkExperienceDTO>> getAllWorkExperience(@RequestHeader("Authorization") String jwt) {
         return ResponseEntity.ok(workExperienceService.getAllWorkExperience());
     }
 
     @GetMapping("{id}")
-    ResponseEntity<WorkExperienceDTO> getWorkExperienceById(@Validated @PathVariable("id") String workExperienceId) {
+    ResponseEntity<WorkExperienceDTO> getWorkExperienceById(@Validated @RequestHeader("Authorization") String jwt,
+                                                            @PathVariable("id") String workExperienceId) {
         return ResponseEntity.ok(workExperienceService.getWorkExperienceById(workExperienceId));
     }
 
     @PostMapping
-    public ResponseEntity<WorkExperienceDTO> saveWorkExperience(@Validated @RequestBody WorkExperienceDTO workExperience) {
+    public ResponseEntity<WorkExperienceDTO> saveWorkExperience(@Validated @RequestHeader("Authorization") String jwt,
+                                                                @RequestBody WorkExperienceDTO workExperience) {
         return ResponseEntity.ok(workExperienceService.saveWorkExperience(workExperience));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<WorkExperienceDTO> updateWorkExperience(@Validated @PathVariable("id") String workExperienceId,
+    public ResponseEntity<WorkExperienceDTO> updateWorkExperience(@Validated @RequestHeader("Authorization") String jwt,
+                                                                  @PathVariable("id") String workExperienceId,
                                                                   @RequestBody WorkExperienceDTO updatedWorkExperience) {
         return ResponseEntity.ok(workExperienceService.updateWorkExperience(workExperienceId, updatedWorkExperience));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteWorkExperience(@Validated @PathVariable("id") String workExperienceId) {
+    public ResponseEntity<String> deleteWorkExperience(@Validated @RequestHeader("Authorization") String jwt,
+                                                       @PathVariable("id") String workExperienceId) {
         workExperienceService.deleteWorkExperience(workExperienceId);
         return ResponseEntity.ok("Work Experience deleted successful");
     }

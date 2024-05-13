@@ -31,8 +31,11 @@ public class WorkExperienceControllerTest {
             "Github"
 
     );
+
     @Mock
     private WorkExperienceService workExperienceService;
+
+    private final String authorization = "eyJhbGciOiJIUzM4NCJ9.eyJpYXQiOjE3MTU1NTA3OTEsImV4cCI6MTcxNTYzNzE5MSwiZW1haWwiOiJzZXRodXNlcmdlQHlhaG9vLmNvbSIsImF1dGhvcml0aWVzIjoiIn0.lGi6KXPSEmlrpSUaAEpWc6nbek8idH_JXUpMIDDmZ72QmGzVPqJXHgJW4hPlpt3Z";
 
     List<String> responsibilities = Arrays.asList(
             "Executed full software development life cycle (SDLC).",
@@ -47,6 +50,7 @@ public class WorkExperienceControllerTest {
             "Complied with project plans and industry standards.",
             "Ensured software was updated with latest features."
     );
+
     @InjectMocks
     private WorkExperienceController workExperienceController;
 
@@ -78,7 +82,7 @@ public class WorkExperienceControllerTest {
         when(workExperienceService.getAllWorkExperience()).thenReturn(workExperienceDTOList);
 
         // Call controller method
-        ResponseEntity<List<WorkExperienceDTO>> response = workExperienceController.getAllWorkExperience();
+        ResponseEntity<List<WorkExperienceDTO>> response = workExperienceController.getAllWorkExperience(authorization);
 
         // Verify the response
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -107,7 +111,7 @@ public class WorkExperienceControllerTest {
         when(workExperienceService.getWorkExperienceById(workExperience.getId())).thenReturn(workExperience);
 
         // Call the Controller method
-        ResponseEntity<WorkExperienceDTO> workExperienceDtoResponseEntity = workExperienceController.getWorkExperienceById(workExperience.getId());
+        ResponseEntity<WorkExperienceDTO> workExperienceDtoResponseEntity = workExperienceController.getWorkExperienceById(authorization, workExperience.getId());
 
         // Verify the response entity
         assertEquals(HttpStatus.OK, workExperienceDtoResponseEntity.getStatusCode());
@@ -123,7 +127,7 @@ public class WorkExperienceControllerTest {
         when(workExperienceService.getWorkExperienceById(workExperienceId)).thenThrow(new ResourceNotFoundException("Work Experience not found"));
 
         // Call the controller method and assert that ResourceNotFundException is thrown
-        assertThrows(ResourceNotFoundException.class, () -> workExperienceController.getWorkExperienceById(workExperienceId));
+        assertThrows(ResourceNotFoundException.class, () -> workExperienceController.getWorkExperienceById(authorization, workExperienceId));
 
     }
 
@@ -148,7 +152,7 @@ public class WorkExperienceControllerTest {
         when(workExperienceService.saveWorkExperience(any(WorkExperienceDTO.class))).thenReturn(workExperience);
 
         // Call controller method
-        ResponseEntity<WorkExperienceDTO> response = workExperienceController.saveWorkExperience(workExperience);
+        ResponseEntity<WorkExperienceDTO> response = workExperienceController.saveWorkExperience(authorization, workExperience);
 
         // Verify the response
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -178,7 +182,7 @@ public class WorkExperienceControllerTest {
         when(workExperienceService.updateWorkExperience(workExperienceId, updatedWorkExperience)).thenReturn(new WorkExperienceDTO());
 
         // Then
-        ResponseEntity<WorkExperienceDTO> response = workExperienceController.updateWorkExperience(workExperienceId, updatedWorkExperience);
+        ResponseEntity<WorkExperienceDTO> response = workExperienceController.updateWorkExperience(authorization, workExperienceId, updatedWorkExperience);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
@@ -192,7 +196,7 @@ public class WorkExperienceControllerTest {
         when(workExperienceService.updateWorkExperience(workExperienceId, updatedWorkExperience)).thenThrow(new ResourceNotFoundException("Resource not found"));
 
         // Then
-        assertThrows(ResourceNotFoundException.class, () -> workExperienceController.updateWorkExperience(workExperienceId, updatedWorkExperience));
+        assertThrows(ResourceNotFoundException.class, () -> workExperienceController.updateWorkExperience(authorization, workExperienceId, updatedWorkExperience));
     }
 
     @Test
@@ -201,7 +205,7 @@ public class WorkExperienceControllerTest {
         String workExperienceId = "663d89525a32f82254013cb9";
 
         // When
-        ResponseEntity<String> stringResponseEntity = workExperienceController.deleteWorkExperience(workExperienceId);
+        ResponseEntity<String> stringResponseEntity = workExperienceController.deleteWorkExperience(authorization, workExperienceId);
 
         // Then
         assertEquals(HttpStatus.OK, stringResponseEntity.getStatusCode());
