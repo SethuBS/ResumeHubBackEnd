@@ -38,13 +38,9 @@ public class UserServiceImpl implements UserService {
     private static final Logger logger = LogManager.getLogger(UserServiceImpl.class);
 
     private final UserRepository userRepository;
-
-    private PasswordEncoder passwordEncoder;
-
     private final EmailConfiguration emailConfiguration;
-
     private final EmailService emailService;
-
+    private PasswordEncoder passwordEncoder;
 
     private UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         var user = userRepository.findByEmail(username)

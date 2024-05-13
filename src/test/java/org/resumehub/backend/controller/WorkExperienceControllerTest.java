@@ -22,6 +22,7 @@ import static org.mockito.Mockito.*;
 
 public class WorkExperienceControllerTest {
 
+    private final String authorization = "eyJhbGciOiJIUzM4NCJ9.eyJpYXQiOjE3MTU1NTA3OTEsImV4cCI6MTcxNTYzNzE5MSwiZW1haWwiOiJzZXRodXNlcmdlQHlhaG9vLmNvbSIsImF1dGhvcml0aWVzIjoiIn0.lGi6KXPSEmlrpSUaAEpWc6nbek8idH_JXUpMIDDmZ72QmGzVPqJXHgJW4hPlpt3Z";
     List<String> skills = Arrays.asList(
             "Java",
             "Microservices",
@@ -31,12 +32,6 @@ public class WorkExperienceControllerTest {
             "Github"
 
     );
-
-    @Mock
-    private WorkExperienceService workExperienceService;
-
-    private final String authorization = "eyJhbGciOiJIUzM4NCJ9.eyJpYXQiOjE3MTU1NTA3OTEsImV4cCI6MTcxNTYzNzE5MSwiZW1haWwiOiJzZXRodXNlcmdlQHlhaG9vLmNvbSIsImF1dGhvcml0aWVzIjoiIn0.lGi6KXPSEmlrpSUaAEpWc6nbek8idH_JXUpMIDDmZ72QmGzVPqJXHgJW4hPlpt3Z";
-
     List<String> responsibilities = Arrays.asList(
             "Executed full software development life cycle (SDLC).",
             "Developed flowcharts, layouts, and documentation to identify requirements and solutions.",
@@ -50,7 +45,8 @@ public class WorkExperienceControllerTest {
             "Complied with project plans and industry standards.",
             "Ensured software was updated with latest features."
     );
-
+    @Mock
+    private WorkExperienceService workExperienceService;
     @InjectMocks
     private WorkExperienceController workExperienceController;
 
