@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.resumehub.backend.dto.PersonalInformationDto;
+import org.resumehub.backend.dto.PersonalInformationDTO;
 import org.resumehub.backend.exception.ResourceAlreadyExistsException;
 import org.resumehub.backend.exception.ResourceNotFoundException;
 import org.resumehub.backend.service.PersonalInformationService;
@@ -37,8 +37,8 @@ public class PersonalInformationControllerTest {
     @Test
     public void testGetAllPersonalInformation() {
         // Mock data
-        List<PersonalInformationDto> personalInformationList = new ArrayList<>();
-        personalInformationList.add(new PersonalInformationDto(
+        List<PersonalInformationDTO> personalInformationList = new ArrayList<>();
+        personalInformationList.add(new PersonalInformationDTO(
                 "1",
                 "663fb95b364adc66334cb83a",
                 "John Doe",
@@ -56,7 +56,7 @@ public class PersonalInformationControllerTest {
         when(personalInformationService.getAllPersonalInformation()).thenReturn(personalInformationList);
 
         // Call controller method
-        ResponseEntity<List<PersonalInformationDto>> response = personalInformationController.getAllPersonalInformation();
+        ResponseEntity<List<PersonalInformationDTO>> response = personalInformationController.getAllPersonalInformation();
 
         // Verify the response
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -66,7 +66,7 @@ public class PersonalInformationControllerTest {
     @Test
     public void testAddPersonalInformation() {
         // Mock data
-        var personalInformationToAdd = new PersonalInformationDto(
+        var personalInformationToAdd = new PersonalInformationDTO(
                 "1",
                 "663fb95b364adc66334cb83a",
                 "Jane Doe",
@@ -81,10 +81,10 @@ public class PersonalInformationControllerTest {
         );
 
         // Mock service method
-        when(personalInformationService.savePersonalInformation(any(PersonalInformationDto.class))).thenReturn(personalInformationToAdd);
+        when(personalInformationService.savePersonalInformation(any(PersonalInformationDTO.class))).thenReturn(personalInformationToAdd);
 
         // Call controller method
-        ResponseEntity<PersonalInformationDto> response = personalInformationController.addPersonalInformation(personalInformationToAdd);
+        ResponseEntity<PersonalInformationDTO> response = personalInformationController.addPersonalInformation(personalInformationToAdd);
 
         // Verify the response
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -94,7 +94,7 @@ public class PersonalInformationControllerTest {
     @Test
     public void testSavePersonalInformation_ResourceAlreadyExists() {
         // Mock data
-        PersonalInformationDto existingPersonalInformation = new PersonalInformationDto(
+        PersonalInformationDTO existingPersonalInformation = new PersonalInformationDTO(
                 "1",
                 "663fb95b364adc66334cb83a",
                 "John Doe",
@@ -108,7 +108,7 @@ public class PersonalInformationControllerTest {
                 "linkedin.com/johndoe");
 
         // Mock the personalInformationService's savePersonalInformation method to throw a ResourceAlreadyExistsException
-        when(personalInformationService.savePersonalInformation(any(PersonalInformationDto.class))).thenThrow(new ResourceAlreadyExistsException("User with given email address: " + existingPersonalInformation.getEmail() + " already exists in the system"));
+        when(personalInformationService.savePersonalInformation(any(PersonalInformationDTO.class))).thenThrow(new ResourceAlreadyExistsException("User with given email address: " + existingPersonalInformation.getEmail() + " already exists in the system"));
 
         // Verify that the exception is thrown
         assertThrows(ResourceAlreadyExistsException.class, () -> personalInformationController.addPersonalInformation(existingPersonalInformation));
@@ -117,7 +117,7 @@ public class PersonalInformationControllerTest {
     @Test
     public void testGetPersonalInformationById() {
         // Mock data
-        var personalInformation = new PersonalInformationDto(
+        var personalInformation = new PersonalInformationDTO(
                 "1",
                 "663fb95b364adc66334cb83a",
                 "John Doe",
@@ -131,11 +131,11 @@ public class PersonalInformationControllerTest {
                 "linkedin.com/johndoe"
         );
 
-        // Mocking personalInformationService.getPersonalInformationById(personalInformationId) to return PersonalInformationDto
+        // Mocking personalInformationService.getPersonalInformationById(personalInformationId) to return PersonalInformationDTO
         when(personalInformationService.getPersonalInformationById(personalInformation.getId())).thenReturn(personalInformation);
 
         // Call the Controller method
-        ResponseEntity<PersonalInformationDto> personalInformationDtoResponseEntity = personalInformationController.getPersonalInformationById(personalInformation.getId());
+        ResponseEntity<PersonalInformationDTO> personalInformationDtoResponseEntity = personalInformationController.getPersonalInformationById(personalInformation.getId());
 
         // Verify the response entity
         assertEquals(HttpStatus.OK, personalInformationDtoResponseEntity.getStatusCode());
@@ -159,7 +159,7 @@ public class PersonalInformationControllerTest {
     public void testUpdatePersonalInformation() {
         // Given
         String personalInformationId = "663d89525a32f82254013cb9";
-        var updatedPersonalInformation = new PersonalInformationDto(
+        var updatedPersonalInformation = new PersonalInformationDTO(
                 "1",
                 "663fb95b364adc66334cb83a",
                 "John Doe",
@@ -175,10 +175,10 @@ public class PersonalInformationControllerTest {
 
 
         // When
-        when(personalInformationService.updatePersonalInformation(personalInformationId, updatedPersonalInformation)).thenReturn(new PersonalInformationDto());
+        when(personalInformationService.updatePersonalInformation(personalInformationId, updatedPersonalInformation)).thenReturn(new PersonalInformationDTO());
 
         // Then
-        ResponseEntity<PersonalInformationDto> response = personalInformationController.updatePersonalInformation(personalInformationId, updatedPersonalInformation);
+        ResponseEntity<PersonalInformationDTO> response = personalInformationController.updatePersonalInformation(personalInformationId, updatedPersonalInformation);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
@@ -186,7 +186,7 @@ public class PersonalInformationControllerTest {
     public void testUpdatePersonalInformation_ResourceNotFoundException() {
         // Given
         String personalInformationId = "663d89525a32f82254013cb910";
-        PersonalInformationDto updatedPersonalInformation = new PersonalInformationDto();
+        PersonalInformationDTO updatedPersonalInformation = new PersonalInformationDTO();
 
         // When
         when(personalInformationService.updatePersonalInformation(personalInformationId, updatedPersonalInformation)).thenThrow(new ResourceNotFoundException("Resource not found"));

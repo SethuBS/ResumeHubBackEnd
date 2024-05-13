@@ -3,7 +3,7 @@ package org.resumehub.backend.service.impl;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.resumehub.backend.dto.WorkExperienceDto;
+import org.resumehub.backend.dto.WorkExperienceDTO;
 import org.resumehub.backend.exception.ResourceNotFoundException;
 import org.resumehub.backend.map.Mapper;
 import org.resumehub.backend.repository.WorkExperienceRepository;
@@ -22,7 +22,7 @@ public class WorkExperienceServiceImpl implements WorkExperienceService {
     private final WorkExperienceRepository workExperienceRepository;
 
     @Override
-    public List<WorkExperienceDto> getAllWorkExperience() {
+    public List<WorkExperienceDTO> getAllWorkExperience() {
         var listOfWorkExperience = workExperienceRepository.findAll()
                 .stream().map(Mapper::mapToDto)
                 .collect(Collectors.toList());
@@ -31,7 +31,7 @@ public class WorkExperienceServiceImpl implements WorkExperienceService {
     }
 
     @Override
-    public WorkExperienceDto getWorkExperienceById(String workExperienceId) {
+    public WorkExperienceDTO getWorkExperienceById(String workExperienceId) {
         var workExperience = workExperienceRepository.findById(workExperienceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Work Experience with given id: " + workExperienceId + " does not exist"));
         logger.info("One record of work experience: {}", workExperience);
@@ -39,7 +39,7 @@ public class WorkExperienceServiceImpl implements WorkExperienceService {
     }
 
     @Override
-    public WorkExperienceDto saveWorkExperience(WorkExperienceDto workExperience) {
+    public WorkExperienceDTO saveWorkExperience(WorkExperienceDTO workExperience) {
         var workExperienceToSave = Mapper.mapToEntity(workExperience);
         var savedWorkExperience = workExperienceRepository.save(workExperienceToSave);
         logger.info("Saved record of work experience: {}", workExperienceToSave);
@@ -47,7 +47,7 @@ public class WorkExperienceServiceImpl implements WorkExperienceService {
     }
 
     @Override
-    public WorkExperienceDto updateWorkExperience(String workExperienceId, WorkExperienceDto updatedWorkExperience) {
+    public WorkExperienceDTO updateWorkExperience(String workExperienceId, WorkExperienceDTO updatedWorkExperience) {
         var workExperience = workExperienceRepository.findById(workExperienceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Work Experience with given id: " + workExperienceId + " does not exist"));
 

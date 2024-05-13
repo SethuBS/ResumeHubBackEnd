@@ -1,25 +1,25 @@
-package org.resumehub.backend.entity;
+package org.resumehub.backend.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Document(collection = "users")
-public class User {
-    @Id
+public class UserDTO {
     private String id;
+    @NotBlank
     private String email;
+    @NotBlank
     private String password;
+    @NotBlank
     private String role;
+
     // Method to mask the password for logging purposes
     public String getMaskedPassword() {
         int passwordLength = password.length();
         return "*".repeat(passwordLength);
     }
-
 }

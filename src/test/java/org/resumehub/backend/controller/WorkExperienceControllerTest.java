@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.resumehub.backend.dto.WorkExperienceDto;
+import org.resumehub.backend.dto.WorkExperienceDTO;
 import org.resumehub.backend.exception.ResourceNotFoundException;
 import org.resumehub.backend.service.WorkExperienceService;
 import org.springframework.http.HttpStatus;
@@ -59,8 +59,8 @@ public class WorkExperienceControllerTest {
     @Test
     public void testGetAllWorkExperience() {
         // Mock data
-        List<WorkExperienceDto> workExperienceDtoList = new ArrayList<>();
-        workExperienceDtoList.add(new WorkExperienceDto(
+        List<WorkExperienceDTO> workExperienceDTOList = new ArrayList<>();
+        workExperienceDTOList.add(new WorkExperienceDTO(
                 "663d89525a32f82254013cb9",
                 "663fb95b364adc66334cb83a",
                 "Gumtree South Africa",
@@ -75,21 +75,21 @@ public class WorkExperienceControllerTest {
         ));
 
         // Mock service method
-        when(workExperienceService.getAllWorkExperience()).thenReturn(workExperienceDtoList);
+        when(workExperienceService.getAllWorkExperience()).thenReturn(workExperienceDTOList);
 
         // Call controller method
-        ResponseEntity<List<WorkExperienceDto>> response = workExperienceController.getAllWorkExperience();
+        ResponseEntity<List<WorkExperienceDTO>> response = workExperienceController.getAllWorkExperience();
 
         // Verify the response
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(workExperienceDtoList, response.getBody());
+        assertEquals(workExperienceDTOList, response.getBody());
 
     }
 
     @Test
     public void testGetWorkExperienceById() {
         // Mock data
-        var workExperience = new WorkExperienceDto(
+        var workExperience = new WorkExperienceDTO(
                 "663d89525a32f82254013cb9",
                 "663fb95b364adc66334cb83a",
                 "Gumtree South Africa",
@@ -103,11 +103,11 @@ public class WorkExperienceControllerTest {
                 skills
         );
 
-        // Mocking workExperienceService.getWorkExperienceById(workExperienceId) to return WorkExperienceDto
+        // Mocking workExperienceService.getWorkExperienceById(workExperienceId) to return WorkExperienceDTO
         when(workExperienceService.getWorkExperienceById(workExperience.getId())).thenReturn(workExperience);
 
         // Call the Controller method
-        ResponseEntity<WorkExperienceDto> workExperienceDtoResponseEntity = workExperienceController.getWorkExperienceById(workExperience.getId());
+        ResponseEntity<WorkExperienceDTO> workExperienceDtoResponseEntity = workExperienceController.getWorkExperienceById(workExperience.getId());
 
         // Verify the response entity
         assertEquals(HttpStatus.OK, workExperienceDtoResponseEntity.getStatusCode());
@@ -130,7 +130,7 @@ public class WorkExperienceControllerTest {
     @Test
     public void testSaveWorkExperience() {
         // Mock data
-        var workExperience = new WorkExperienceDto(
+        var workExperience = new WorkExperienceDTO(
                 "663d89525a32f82254013cb9",
                 "663fb95b364adc66334cb83a",
                 "Gumtree South Africa",
@@ -145,10 +145,10 @@ public class WorkExperienceControllerTest {
         );
 
         // Mock service method
-        when(workExperienceService.saveWorkExperience(any(WorkExperienceDto.class))).thenReturn(workExperience);
+        when(workExperienceService.saveWorkExperience(any(WorkExperienceDTO.class))).thenReturn(workExperience);
 
         // Call controller method
-        ResponseEntity<WorkExperienceDto> response = workExperienceController.saveWorkExperience(workExperience);
+        ResponseEntity<WorkExperienceDTO> response = workExperienceController.saveWorkExperience(workExperience);
 
         // Verify the response
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -159,7 +159,7 @@ public class WorkExperienceControllerTest {
     public void testUpdateWorkExperience() {
         // Given
         String workExperienceId = "663d89525a32f82254013cb9";
-        var updatedWorkExperience = new WorkExperienceDto(
+        var updatedWorkExperience = new WorkExperienceDTO(
                 "663d89525a32f82254013cb9",
                 "663fb95b364adc66334cb83a",
                 "Gumtree South Africa",
@@ -175,10 +175,10 @@ public class WorkExperienceControllerTest {
 
 
         // When
-        when(workExperienceService.updateWorkExperience(workExperienceId, updatedWorkExperience)).thenReturn(new WorkExperienceDto());
+        when(workExperienceService.updateWorkExperience(workExperienceId, updatedWorkExperience)).thenReturn(new WorkExperienceDTO());
 
         // Then
-        ResponseEntity<WorkExperienceDto> response = workExperienceController.updateWorkExperience(workExperienceId, updatedWorkExperience);
+        ResponseEntity<WorkExperienceDTO> response = workExperienceController.updateWorkExperience(workExperienceId, updatedWorkExperience);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
@@ -186,7 +186,7 @@ public class WorkExperienceControllerTest {
     public void testUpdateWorkExperience_ResourceNotFoundException() {
         // Given
         String workExperienceId = "663d89525a32f82254013cb910";
-        var updatedWorkExperience = new WorkExperienceDto();
+        var updatedWorkExperience = new WorkExperienceDTO();
 
         // When
         when(workExperienceService.updateWorkExperience(workExperienceId, updatedWorkExperience)).thenThrow(new ResourceNotFoundException("Resource not found"));

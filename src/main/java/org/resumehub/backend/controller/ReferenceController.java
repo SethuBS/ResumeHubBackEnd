@@ -1,7 +1,7 @@
 package org.resumehub.backend.controller;
 
 import lombok.AllArgsConstructor;
-import org.resumehub.backend.dto.ReferenceDto;
+import org.resumehub.backend.dto.ReferenceDTO;
 import org.resumehub.backend.service.ReferenceService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -18,23 +18,23 @@ public class ReferenceController {
     private final ReferenceService referenceService;
 
     @GetMapping
-    public ResponseEntity<List<ReferenceDto>> getAllReferences() {
+    public ResponseEntity<List<ReferenceDTO>> getAllReferences() {
         return ResponseEntity.ok(referenceService.getAllReferences());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ReferenceDto> getReferenceById(@Validated @PathVariable("id") String referenceId) {
+    public ResponseEntity<ReferenceDTO> getReferenceById(@Validated @PathVariable("id") String referenceId) {
         return ResponseEntity.ok(referenceService.getReferenceById(referenceId));
     }
 
     @PostMapping
-    public ResponseEntity<ReferenceDto> createNewReference(@Validated @RequestBody ReferenceDto newReference) {
+    public ResponseEntity<ReferenceDTO> createNewReference(@Validated @RequestBody ReferenceDTO newReference) {
         return ResponseEntity.ok(referenceService.createNewReference(newReference));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<ReferenceDto> updateReference(@Validated @PathVariable("id") String referenceId,
-                                                        @RequestBody ReferenceDto updatedReference) {
+    public ResponseEntity<ReferenceDTO> updateReference(@Validated @PathVariable("id") String referenceId,
+                                                        @RequestBody ReferenceDTO updatedReference) {
         return ResponseEntity.ok(referenceService.updateReference(referenceId, updatedReference));
     }
 

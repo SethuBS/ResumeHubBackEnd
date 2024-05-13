@@ -1,36 +1,41 @@
 package org.resumehub.backend.dto;
 
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
 
-import java.util.List;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class WorkExperienceDto {
+public class PersonalInformationDTO {
 
     private String id;
     @NotNull
     private String userId;
     @NotNull
-    private String companyName;
+    private String fullName;
     @NotNull
     private String position;
     @NotNull
-    private String startDate;
-    @NotNull
-    private String endDate;
+    private String company;
     @NotNull
     private String city;
     @NotNull
     private String province;
     @NotNull
     private String country;
+
     @NotNull
-    private List<String> responsibilities;
+    @Pattern(regexp = "^(\\+\\d{1,3}[- ]?)?\\d{10}$", message = "Invalid mobile number format")
+    private String mobile;
     @NotNull
-    private List<String> skills;
+    @Email
+    private String email;
+    @NotNull
+    private String linkedIn;
+
 }

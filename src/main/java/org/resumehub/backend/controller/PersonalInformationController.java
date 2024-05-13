@@ -2,7 +2,7 @@ package org.resumehub.backend.controller;
 
 
 import lombok.AllArgsConstructor;
-import org.resumehub.backend.dto.PersonalInformationDto;
+import org.resumehub.backend.dto.PersonalInformationDTO;
 import org.resumehub.backend.service.PersonalInformationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -19,23 +19,23 @@ public class PersonalInformationController {
     private final PersonalInformationService personalInformationService;
 
     @GetMapping
-    public ResponseEntity<List<PersonalInformationDto>> getAllPersonalInformation() {
+    public ResponseEntity<List<PersonalInformationDTO>> getAllPersonalInformation() {
         return ResponseEntity.ok(personalInformationService.getAllPersonalInformation());
     }
 
     @PostMapping
-    public ResponseEntity<PersonalInformationDto> addPersonalInformation(@Validated @RequestBody PersonalInformationDto personalInformation) {
+    public ResponseEntity<PersonalInformationDTO> addPersonalInformation(@Validated @RequestBody PersonalInformationDTO personalInformation) {
         return ResponseEntity.ok(personalInformationService.savePersonalInformation(personalInformation));
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<PersonalInformationDto> getPersonalInformationById(@Validated @PathVariable("id") String personalInformationId) {
+    public ResponseEntity<PersonalInformationDTO> getPersonalInformationById(@Validated @PathVariable("id") String personalInformationId) {
         return ResponseEntity.ok(personalInformationService.getPersonalInformationById(personalInformationId));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<PersonalInformationDto> updatePersonalInformation(@Validated @PathVariable("id") String personalInformationId,
-                                                                            @RequestBody PersonalInformationDto updatedPersonalInformation) {
+    public ResponseEntity<PersonalInformationDTO> updatePersonalInformation(@Validated @PathVariable("id") String personalInformationId,
+                                                                            @RequestBody PersonalInformationDTO updatedPersonalInformation) {
         return ResponseEntity.ok(personalInformationService.updatePersonalInformation(personalInformationId, updatedPersonalInformation));
     }
 

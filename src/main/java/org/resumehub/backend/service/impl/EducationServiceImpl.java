@@ -3,7 +3,7 @@ package org.resumehub.backend.service.impl;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.resumehub.backend.dto.EducationDto;
+import org.resumehub.backend.dto.EducationDTO;
 import org.resumehub.backend.exception.ResourceNotFoundException;
 import org.resumehub.backend.map.Mapper;
 import org.resumehub.backend.repository.EducationRepository;
@@ -22,7 +22,7 @@ public class EducationServiceImpl implements EducationService {
     private final EducationRepository educationRepository;
 
     @Override
-    public List<EducationDto> getAllEducation() {
+    public List<EducationDTO> getAllEducation() {
         var listOfEducation = educationRepository.findAll()
                 .stream().map(Mapper::mapToDto)
                 .collect(Collectors.toList());
@@ -31,7 +31,7 @@ public class EducationServiceImpl implements EducationService {
     }
 
     @Override
-    public EducationDto getEducationById(String educationId) {
+    public EducationDTO getEducationById(String educationId) {
         var education = educationRepository.findById(educationId)
                 .orElseThrow(() -> new ResourceNotFoundException("Education with give id: " + educationId + " does not exist"));
         logger.info("One record of education {}", education);
@@ -39,7 +39,7 @@ public class EducationServiceImpl implements EducationService {
     }
 
     @Override
-    public EducationDto createEducation(EducationDto newEducation) {
+    public EducationDTO createEducation(EducationDTO newEducation) {
         var education = Mapper.mapTOEntity(newEducation);
         var createdEducation = educationRepository.save(education);
         logger.info("Saved record of education {}", createdEducation);
@@ -47,7 +47,7 @@ public class EducationServiceImpl implements EducationService {
     }
 
     @Override
-    public EducationDto updateEducation(String educationId, EducationDto updatedEducation) {
+    public EducationDTO updateEducation(String educationId, EducationDTO updatedEducation) {
         var education = educationRepository.findById(educationId)
                 .orElseThrow(() -> new ResourceNotFoundException("Education with give id: " + educationId + " does not exist"));
 

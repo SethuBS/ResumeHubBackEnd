@@ -3,7 +3,7 @@ package org.resumehub.backend.service.impl;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.resumehub.backend.dto.PersonalInformationDto;
+import org.resumehub.backend.dto.PersonalInformationDTO;
 import org.resumehub.backend.exception.ResourceAlreadyExistsException;
 import org.resumehub.backend.exception.ResourceNotFoundException;
 import org.resumehub.backend.map.Mapper;
@@ -24,7 +24,7 @@ public class PersonalInformationServiceImpl implements PersonalInformationServic
 
 
     @Override
-    public List<PersonalInformationDto> getAllPersonalInformation() {
+    public List<PersonalInformationDTO> getAllPersonalInformation() {
         var listOfPersonalInformation = personalInformationRepository.findAll()
                 .stream().map(Mapper::mapToDto)
                 .collect(Collectors.toList());
@@ -33,7 +33,7 @@ public class PersonalInformationServiceImpl implements PersonalInformationServic
     }
 
     @Override
-    public PersonalInformationDto savePersonalInformation(PersonalInformationDto personalInformation) {
+    public PersonalInformationDTO savePersonalInformation(PersonalInformationDTO personalInformation) {
         var email = personalInformation.getEmail();
 
         logger.info(email);
@@ -51,7 +51,7 @@ public class PersonalInformationServiceImpl implements PersonalInformationServic
     }
 
     @Override
-    public PersonalInformationDto getPersonalInformationById(String personalInformationId) {
+    public PersonalInformationDTO getPersonalInformationById(String personalInformationId) {
         var personalInformation = personalInformationRepository.findById(personalInformationId)
                 .orElseThrow(() -> new ResourceNotFoundException("Personal Information with given id: " + personalInformationId + " does not exist"));
         logger.info("One record of personal information: {}", personalInformation);
@@ -59,7 +59,7 @@ public class PersonalInformationServiceImpl implements PersonalInformationServic
     }
 
     @Override
-    public PersonalInformationDto updatePersonalInformation(String personalInformationId, PersonalInformationDto updatedPersonalInformation) {
+    public PersonalInformationDTO updatePersonalInformation(String personalInformationId, PersonalInformationDTO updatedPersonalInformation) {
         var personalInformation = personalInformationRepository.findById(personalInformationId)
                 .orElseThrow(() -> new ResourceNotFoundException("Personal Information with given id: " + personalInformationId + " does not exist"));
 

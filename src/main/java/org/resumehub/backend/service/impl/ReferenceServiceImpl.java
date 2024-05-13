@@ -3,7 +3,7 @@ package org.resumehub.backend.service.impl;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.resumehub.backend.dto.ReferenceDto;
+import org.resumehub.backend.dto.ReferenceDTO;
 import org.resumehub.backend.exception.ResourceNotFoundException;
 import org.resumehub.backend.map.Mapper;
 import org.resumehub.backend.repository.ReferenceRepository;
@@ -22,7 +22,7 @@ public class ReferenceServiceImpl implements ReferenceService {
     private final ReferenceRepository referenceRepository;
 
     @Override
-    public List<ReferenceDto> getAllReferences() {
+    public List<ReferenceDTO> getAllReferences() {
         var listOfReferences = referenceRepository.findAll()
                 .stream().map(Mapper::mapToDto)
                 .collect(Collectors.toList());
@@ -31,7 +31,7 @@ public class ReferenceServiceImpl implements ReferenceService {
     }
 
     @Override
-    public ReferenceDto getReferenceById(String referenceId) {
+    public ReferenceDTO getReferenceById(String referenceId) {
         var oneRecordOfReference = referenceRepository.findById(referenceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Reference with given id: " + referenceId + " does not exist"));
         logger.info("One record of reference: {}", oneRecordOfReference);
@@ -39,7 +39,7 @@ public class ReferenceServiceImpl implements ReferenceService {
     }
 
     @Override
-    public ReferenceDto createNewReference(ReferenceDto newReference) {
+    public ReferenceDTO createNewReference(ReferenceDTO newReference) {
         var referenceToCreate = Mapper.mapToEntity(newReference);
         var createdReference = referenceRepository.save(referenceToCreate);
         logger.info("Saved record of reference: {}", createdReference);
@@ -47,7 +47,7 @@ public class ReferenceServiceImpl implements ReferenceService {
     }
 
     @Override
-    public ReferenceDto updateReference(String referenceId, ReferenceDto updatedReference) {
+    public ReferenceDTO updateReference(String referenceId, ReferenceDTO updatedReference) {
         var existingRecordOfReference = referenceRepository.findById(referenceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Reference with given id: " + referenceId + " does not exist"));
 

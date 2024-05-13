@@ -8,17 +8,19 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ReferenceDto {
+public class EducationDTO {
 
     private String id;
     @NotNull
     private String userId;
     @NotNull
-    private String name;
+    private String institution;
     @NotNull
-    private String company;
+    private String degree;
     @NotNull
-    private String email;
+    private String fieldOfStudy;
     @NotNull
-    private String mobile;
+    private String startDate;
+    @NotNull
+    private String endDate;
 }

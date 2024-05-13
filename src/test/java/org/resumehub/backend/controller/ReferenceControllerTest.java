@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.resumehub.backend.dto.ReferenceDto;
+import org.resumehub.backend.dto.ReferenceDTO;
 import org.resumehub.backend.exception.ResourceNotFoundException;
 import org.resumehub.backend.service.ReferenceService;
 import org.springframework.http.HttpStatus;
@@ -36,8 +36,8 @@ public class ReferenceControllerTest {
     @Test
     public void testGetAllReferences() {
         // Mock Data
-        List<ReferenceDto> referenceDtoList = new ArrayList<>();
-        referenceDtoList.add(new ReferenceDto(
+        List<ReferenceDTO> referenceDTOList = new ArrayList<>();
+        referenceDTOList.add(new ReferenceDTO(
                 "663fa70feaf5de0442e70ea2",
                 "663fb95b364adc66334cb83a",
                 "Damian Naidoo",
@@ -47,20 +47,20 @@ public class ReferenceControllerTest {
         ));
 
         // Mock service method
-        when(referenceService.getAllReferences()).thenReturn(referenceDtoList);
+        when(referenceService.getAllReferences()).thenReturn(referenceDTOList);
 
         // Call controller method
-        ResponseEntity<List<ReferenceDto>> response = referenceController.getAllReferences();
+        ResponseEntity<List<ReferenceDTO>> response = referenceController.getAllReferences();
 
         // Verify the response
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(referenceDtoList, response.getBody());
+        assertEquals(referenceDTOList, response.getBody());
     }
 
     @Test
     public void testGetReferenceById() {
         // Mock data
-        var referenceDto = new ReferenceDto(
+        var referenceDto = new ReferenceDTO(
                 "663fa70feaf5de0442e70ea2",
                 "663fb95b364adc66334cb83a",
                 "Damian Naidoo",
@@ -69,11 +69,11 @@ public class ReferenceControllerTest {
                 "+27 81 451 4022"
         );
 
-        // Mocking referenceService.getReferenceById(referenceDto.getId()) to return ReferenceDto
+        // Mocking referenceService.getReferenceById(referenceDto.getId()) to return ReferenceDTO
         when(referenceService.getReferenceById(referenceDto.getId())).thenReturn(referenceDto);
 
         // Call the Controller method
-        ResponseEntity<ReferenceDto> referenceDtoResponseEntity = referenceController.getReferenceById(referenceDto.getId());
+        ResponseEntity<ReferenceDTO> referenceDtoResponseEntity = referenceController.getReferenceById(referenceDto.getId());
 
         // Verify the response entity
         assertEquals(HttpStatus.OK, referenceDtoResponseEntity.getStatusCode());
@@ -96,7 +96,7 @@ public class ReferenceControllerTest {
     @Test
     public void testCreateNewReference() {
         // Mock data
-        var referenceDto = new ReferenceDto(
+        var referenceDto = new ReferenceDTO(
                 "663fa70feaf5de0442e70ea2",
                 "663fb95b364adc66334cb83a",
                 "Damian Naidoo",
@@ -106,10 +106,10 @@ public class ReferenceControllerTest {
         );
 
         // Mock service method
-        when(referenceService.createNewReference(any(ReferenceDto.class))).thenReturn(referenceDto);
+        when(referenceService.createNewReference(any(ReferenceDTO.class))).thenReturn(referenceDto);
 
         // Call controller method
-        ResponseEntity<ReferenceDto> response = referenceController.createNewReference(referenceDto);
+        ResponseEntity<ReferenceDTO> response = referenceController.createNewReference(referenceDto);
 
         // Verify the response
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -121,7 +121,7 @@ public class ReferenceControllerTest {
         // Given
         String referenceId = "663d89525a32f82254013cb9";
         // Mock data
-        var referenceDto = new ReferenceDto(
+        var referenceDto = new ReferenceDTO(
                 "663fa70feaf5de0442e70ea2",
                 "663fb95b364adc66334cb83a",
                 "Damian Naidoo",
@@ -132,10 +132,10 @@ public class ReferenceControllerTest {
 
 
         // When
-        when(referenceService.updateReference(referenceId, referenceDto)).thenReturn(new ReferenceDto());
+        when(referenceService.updateReference(referenceId, referenceDto)).thenReturn(new ReferenceDTO());
 
         // Then
-        ResponseEntity<ReferenceDto> response = referenceController.updateReference(referenceId, referenceDto);
+        ResponseEntity<ReferenceDTO> response = referenceController.updateReference(referenceId, referenceDto);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
@@ -143,7 +143,7 @@ public class ReferenceControllerTest {
     public void testUpdateReference_ResourceNotFoundException() {
         // Given
         String referenceId = "663d89525a32f82254013cb910";
-        var updatedReference = new ReferenceDto();
+        var updatedReference = new ReferenceDTO();
 
         // When
         when(referenceService.updateReference(referenceId, updatedReference)).thenThrow(new ResourceNotFoundException("Resource not found"));

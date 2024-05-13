@@ -1,7 +1,7 @@
 package org.resumehub.backend.controller;
 
 import lombok.AllArgsConstructor;
-import org.resumehub.backend.dto.WorkExperienceDto;
+import org.resumehub.backend.dto.WorkExperienceDTO;
 import org.resumehub.backend.service.WorkExperienceService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -18,23 +18,23 @@ public class WorkExperienceController {
     private final WorkExperienceService workExperienceService;
 
     @GetMapping
-    public ResponseEntity<List<WorkExperienceDto>> getAllWorkExperience() {
+    public ResponseEntity<List<WorkExperienceDTO>> getAllWorkExperience() {
         return ResponseEntity.ok(workExperienceService.getAllWorkExperience());
     }
 
     @GetMapping("{id}")
-    ResponseEntity<WorkExperienceDto> getWorkExperienceById(@Validated @PathVariable("id") String workExperienceId) {
+    ResponseEntity<WorkExperienceDTO> getWorkExperienceById(@Validated @PathVariable("id") String workExperienceId) {
         return ResponseEntity.ok(workExperienceService.getWorkExperienceById(workExperienceId));
     }
 
     @PostMapping
-    public ResponseEntity<WorkExperienceDto> saveWorkExperience(@Validated @RequestBody WorkExperienceDto workExperience) {
+    public ResponseEntity<WorkExperienceDTO> saveWorkExperience(@Validated @RequestBody WorkExperienceDTO workExperience) {
         return ResponseEntity.ok(workExperienceService.saveWorkExperience(workExperience));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<WorkExperienceDto> updateWorkExperience(@Validated @PathVariable("id") String workExperienceId,
-                                                                  @RequestBody WorkExperienceDto updatedWorkExperience) {
+    public ResponseEntity<WorkExperienceDTO> updateWorkExperience(@Validated @PathVariable("id") String workExperienceId,
+                                                                  @RequestBody WorkExperienceDTO updatedWorkExperience) {
         return ResponseEntity.ok(workExperienceService.updateWorkExperience(workExperienceId, updatedWorkExperience));
     }
 

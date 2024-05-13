@@ -1,17 +1,17 @@
 package org.resumehub.backend.service;
 
-import org.resumehub.backend.dto.WorkExperienceDto;
+import org.resumehub.backend.dto.WorkExperienceDTO;
 
 import java.util.List;
 
 public interface WorkExperienceService {
-    List<WorkExperienceDto> getAllWorkExperience();
+    List<WorkExperienceDTO> getAllWorkExperience();
 
-    WorkExperienceDto getWorkExperienceById(String workExperienceId);
+    WorkExperienceDTO getWorkExperienceById(String workExperienceId);
 
-    WorkExperienceDto saveWorkExperience(WorkExperienceDto workExperience);
+    WorkExperienceDTO saveWorkExperience(WorkExperienceDTO workExperience);
 
-    WorkExperienceDto updateWorkExperience(String workExperienceId, WorkExperienceDto updatedWorkExperience);
+    WorkExperienceDTO updateWorkExperience(String workExperienceId, WorkExperienceDTO updatedWorkExperience);
 
     void deleteWorkExperience(String workExperienceId);
 }

@@ -1,17 +1,17 @@
 package org.resumehub.backend.service;
 
-import org.resumehub.backend.dto.EducationDto;
+import org.resumehub.backend.dto.EducationDTO;
 
 import java.util.List;
 
 public interface EducationService {
-    List<EducationDto> getAllEducation();
+    List<EducationDTO> getAllEducation();
 
-    EducationDto getEducationById(String educationId);
+    EducationDTO getEducationById(String educationId);
 
-    EducationDto createEducation(EducationDto newEducation);
+    EducationDTO createEducation(EducationDTO newEducation);
 
-    EducationDto updateEducation(String educationId, EducationDto updatedEducation);
+    EducationDTO updateEducation(String educationId, EducationDTO updatedEducation);
 
     void deleteEducation(String educationId);
 }

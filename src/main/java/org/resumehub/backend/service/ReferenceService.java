@@ -1,17 +1,17 @@
 package org.resumehub.backend.service;
 
-import org.resumehub.backend.dto.ReferenceDto;
+import org.resumehub.backend.dto.ReferenceDTO;
 
 import java.util.List;
 
 public interface ReferenceService {
-    List<ReferenceDto> getAllReferences();
+    List<ReferenceDTO> getAllReferences();
 
-    ReferenceDto getReferenceById(String referenceId);
+    ReferenceDTO getReferenceById(String referenceId);
 
-    ReferenceDto createNewReference(ReferenceDto newReference);
+    ReferenceDTO createNewReference(ReferenceDTO newReference);
 
-    ReferenceDto updateReference(String referenceId, ReferenceDto updatedReference);
+    ReferenceDTO updateReference(String referenceId, ReferenceDTO updatedReference);
 
     void deleteReference(String referenceId);
 }

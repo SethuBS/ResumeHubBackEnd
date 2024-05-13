@@ -8,16 +8,13 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class UserDto {
+public class LoginDTO {
     private String id;
     @NotBlank
     private String email;
     @NotBlank
     private String password;
+    @NotBlank
+    private String role = "ROLE_CUSTOMER";
 
-    // Method to mask the password for logging purposes
-    public String getMaskedPassword() {
-        int passwordLength = password.length();
-        return "*".repeat(passwordLength);
-    }
 }

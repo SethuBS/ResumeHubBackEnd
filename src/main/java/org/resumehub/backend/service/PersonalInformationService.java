@@ -1,18 +1,18 @@
 package org.resumehub.backend.service;
 
-import org.resumehub.backend.dto.PersonalInformationDto;
+import org.resumehub.backend.dto.PersonalInformationDTO;
 
 import java.util.List;
 
 public interface PersonalInformationService {
 
-    List<PersonalInformationDto> getAllPersonalInformation();
+    List<PersonalInformationDTO> getAllPersonalInformation();
 
-    PersonalInformationDto savePersonalInformation(PersonalInformationDto personalInformation);
+    PersonalInformationDTO savePersonalInformation(PersonalInformationDTO personalInformation);
 
-    PersonalInformationDto getPersonalInformationById(String personalInformationId);
+    PersonalInformationDTO getPersonalInformationById(String personalInformationId);
 
-    PersonalInformationDto updatePersonalInformation(String personalInformationId, PersonalInformationDto updatedPersonalInformation);
+    PersonalInformationDTO updatePersonalInformation(String personalInformationId, PersonalInformationDTO updatedPersonalInformation);
 
     void deletePersonalInformation(String personalInformationId);
 }

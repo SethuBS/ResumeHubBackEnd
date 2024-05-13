@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.resumehub.backend.dto.EducationDto;
+import org.resumehub.backend.dto.EducationDTO;
 import org.resumehub.backend.exception.ResourceNotFoundException;
 import org.resumehub.backend.service.EducationService;
 import org.springframework.http.HttpStatus;
@@ -36,8 +36,8 @@ public class EducationControllerTest {
     @Test
     public void testGetAllEducation() {
         // Mock data
-        List<EducationDto> educationDtoList = new ArrayList<>();
-        educationDtoList.add(new EducationDto(
+        List<EducationDTO> educationDTOList = new ArrayList<>();
+        educationDTOList.add(new EducationDTO(
                 "663d89525a32f82254013cb9",
                 "663fb95b364adc66334cb83a",
                 "Damelin",
@@ -48,21 +48,21 @@ public class EducationControllerTest {
         ));
 
         // Mock service method
-        when(educationService.getAllEducation()).thenReturn(educationDtoList);
+        when(educationService.getAllEducation()).thenReturn(educationDTOList);
 
         // Call controller method
-        ResponseEntity<List<EducationDto>> response = educationController.getAllEducation();
+        ResponseEntity<List<EducationDTO>> response = educationController.getAllEducation();
 
         // Verify the response
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(educationDtoList, response.getBody());
+        assertEquals(educationDTOList, response.getBody());
 
     }
 
     @Test
     public void testGetEducationById() {
         // Mock data
-        var existingEducation = new EducationDto(
+        var existingEducation = new EducationDTO(
                 "663d89525a32f82254013cb9",
                 "663fb95b364adc66334cb83a",
                 "Damelin",
@@ -76,7 +76,7 @@ public class EducationControllerTest {
         when(educationService.getEducationById(existingEducation.getId())).thenReturn(existingEducation);
 
         // Call the Controller method
-        ResponseEntity<EducationDto> educationDtoResponseEntity = educationController.getEducationById(existingEducation.getId());
+        ResponseEntity<EducationDTO> educationDtoResponseEntity = educationController.getEducationById(existingEducation.getId());
 
         // Verify the response entity
         assertEquals(HttpStatus.OK, educationDtoResponseEntity.getStatusCode());
@@ -99,7 +99,7 @@ public class EducationControllerTest {
     @Test
     public void testCreateEducation() {
         // Mock data
-        var newEducation = new EducationDto(
+        var newEducation = new EducationDTO(
                 "663d89525a32f82254013cb9",
                 "663fb95b364adc66334cb83a",
                 "Damelin",
@@ -110,10 +110,10 @@ public class EducationControllerTest {
         );
 
         // Mock service method
-        when(educationService.createEducation(any(EducationDto.class))).thenReturn(newEducation);
+        when(educationService.createEducation(any(EducationDTO.class))).thenReturn(newEducation);
 
         // Call controller method
-        ResponseEntity<EducationDto> response = educationController.createEducation(newEducation);
+        ResponseEntity<EducationDTO> response = educationController.createEducation(newEducation);
 
         // Verify the response
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -124,7 +124,7 @@ public class EducationControllerTest {
     public void testUpdateEducation() {
         // Given
         String educationId = "663d89525a32f82254013cb9";
-        var updatedEducation = new EducationDto(
+        var updatedEducation = new EducationDTO(
                 "663d89525a32f82254013cb9",
                 "663fb95b364adc66334cb83a",
                 "Damelin",
@@ -136,10 +136,10 @@ public class EducationControllerTest {
 
 
         // When
-        when(educationService.updateEducation(educationId, updatedEducation)).thenReturn(new EducationDto());
+        when(educationService.updateEducation(educationId, updatedEducation)).thenReturn(new EducationDTO());
 
         // Then
-        ResponseEntity<EducationDto> response = educationController.updateEducation(educationId, updatedEducation);
+        ResponseEntity<EducationDTO> response = educationController.updateEducation(educationId, updatedEducation);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
@@ -147,7 +147,7 @@ public class EducationControllerTest {
     public void testUpdateEducation_ResourceNotFoundException() {
         // Given
         String educationId = "663d89525a32f82254013cb910";
-        var updatedEducation = new EducationDto();
+        var updatedEducation = new EducationDTO();
 
         // When
         when(educationService.updateEducation(educationId, updatedEducation)).thenThrow(new ResourceNotFoundException("Resource not found"));

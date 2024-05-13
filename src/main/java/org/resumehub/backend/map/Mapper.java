@@ -5,8 +5,8 @@ import org.resumehub.backend.entity.*;
 
 public class Mapper {
 
-    public static PersonalInformationDto mapToDto(PersonalInformation personalInformation) {
-        return new PersonalInformationDto(
+    public static PersonalInformationDTO mapToDto(PersonalInformation personalInformation) {
+        return new PersonalInformationDTO(
                 personalInformation.getId(),
                 personalInformation.getUserId(),
                 personalInformation.getFullName(),
@@ -21,7 +21,7 @@ public class Mapper {
         );
     }
 
-    public static PersonalInformation mapToEntity(PersonalInformationDto personalInformationDto) {
+    public static PersonalInformation mapToEntity(PersonalInformationDTO personalInformationDto) {
         return new PersonalInformation(
                 personalInformationDto.getId(),
                 personalInformationDto.getUserId(),
@@ -37,8 +37,8 @@ public class Mapper {
         );
     }
 
-    public static WorkExperienceDto mapToDto(WorkExperience workExperience) {
-        return new WorkExperienceDto(
+    public static WorkExperienceDTO mapToDto(WorkExperience workExperience) {
+        return new WorkExperienceDTO(
                 workExperience.getId(),
                 workExperience.getUserId(),
                 workExperience.getCompanyName(),
@@ -53,7 +53,7 @@ public class Mapper {
         );
     }
 
-    public static WorkExperience mapToEntity(WorkExperienceDto workExperienceDto) {
+    public static WorkExperience mapToEntity(WorkExperienceDTO workExperienceDto) {
         return new WorkExperience(
                 workExperienceDto.getId(),
                 workExperienceDto.getUserId(),
@@ -69,8 +69,8 @@ public class Mapper {
         );
     }
 
-    public static EducationDto mapToDto(Education education) {
-        return new EducationDto(
+    public static EducationDTO mapToDto(Education education) {
+        return new EducationDTO(
                 education.getId(),
                 education.getUserId(),
                 education.getInstitution(),
@@ -81,7 +81,7 @@ public class Mapper {
         );
     }
 
-    public static Education mapTOEntity(EducationDto educationDto) {
+    public static Education mapTOEntity(EducationDTO educationDto) {
         return new Education(
                 educationDto.getId(),
                 educationDto.getUserId(),
@@ -93,8 +93,8 @@ public class Mapper {
         );
     }
 
-    public static ReferenceDto mapToDto(Reference reference) {
-        return new ReferenceDto(
+    public static ReferenceDTO mapToDto(Reference reference) {
+        return new ReferenceDTO(
                 reference.getId(),
                 reference.getUserId(),
                 reference.getName(),
@@ -104,7 +104,7 @@ public class Mapper {
         );
     }
 
-    public static Reference mapToEntity(ReferenceDto referenceDto) {
+    public static Reference mapToEntity(ReferenceDTO referenceDto) {
         return new Reference(
                 referenceDto.getId(),
                 referenceDto.getUserId(),
@@ -115,19 +115,30 @@ public class Mapper {
         );
     }
 
-    public static UserDto mapToDto(User user) {
-        return new UserDto(
+    public static UserDTO mapToDto(User user) {
+        return new UserDTO(
                 user.getId(),
                 user.getEmail(),
-                user.getEmail()
+                user.getPassword(),
+                user.getRole()
         );
     }
 
-    public static User mapToEntity(UserDto userDto) {
+    public static User mapToEntity(UserDTO userDto) {
         return new User(
                 userDto.getId(),
                 userDto.getEmail(),
-                userDto.getPassword()
+                userDto.getPassword(),
+                userDto.getRole()
+        );
+    }
+
+    public static User mapToEntity(LoginDTO loginDTO) {
+        return new User(
+                loginDTO.getId(),
+                loginDTO.getEmail(),
+                loginDTO.getPassword(),
+                loginDTO.getRole()
         );
     }
 }
