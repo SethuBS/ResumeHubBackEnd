@@ -11,7 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class WorkExperienceDTO {
-
     private String id;
     @NotNull
     private String userId;

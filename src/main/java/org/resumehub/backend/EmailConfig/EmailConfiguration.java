@@ -18,7 +18,7 @@ public class EmailConfiguration {
 
     public EmailConfiguration() {
         try {
-            props.load(getClass().getClassLoader().getResourceAsStream("welcomeEmail.properties"));
+            props.load(getClass().getClassLoader().getResourceAsStream("email.properties"));
         } catch (IOException e) {
             logger.error(e.getMessage());
         }

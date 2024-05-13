@@ -20,5 +20,9 @@ public interface UserService {
 
     UserDTO update(String userId, UserDTO updatedUser);
 
+    void updateUserPassword(String userId, String newPassword);
+
+    UserDTO getUserByEmail(String email);
+
     void delete(String userId);
 }

@@ -144,4 +144,13 @@ public class Mapper {
                 loginDTO.getRole()
         );
     }
+
+    public static PasswordResetTokenDTO mapToDto(PasswordResetToken passwordResetToken) {
+        return new PasswordResetTokenDTO(
+                passwordResetToken.getId(),
+                passwordResetToken.getResetToken(),
+                passwordResetToken.getTokenExpiry(),
+                passwordResetToken.getUserId()
+        );
+    }
 }

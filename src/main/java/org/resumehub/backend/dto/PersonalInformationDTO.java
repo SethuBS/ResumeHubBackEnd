@@ -12,7 +12,6 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class PersonalInformationDTO {
-
     private String id;
     @NotNull
     private String userId;

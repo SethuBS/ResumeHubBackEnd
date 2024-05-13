@@ -190,6 +190,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updateUserPassword(String userId, String newPassword) {
+        var user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User with id " + userId + " not found"));
+
+        user.setPassword(newPassword);
+        userRepository.save(user);
+    }
+
+    @Override
+    public UserDTO getUserByEmail(String email) {
+        var user = userRepository.findUserByEmail(email);
+        if (user == null) {
+            throw new ResourceNotFoundException("User with given : email" + email + " does not exist");
+        }
+        return Mapper.mapToDto(user);
+    }
+
+    @Override
     public void delete(String userId) {
         userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User with given id: " + userId + " does not exist in the system"));
