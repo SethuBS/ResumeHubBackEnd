@@ -55,4 +55,5 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
             passwordResetTokenRepository.delete(resetToken);
         }
     }
+
 }

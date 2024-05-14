@@ -16,7 +16,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class EducationControllerTest {
@@ -162,7 +161,7 @@ public class EducationControllerTest {
         String educationId = "663d89525a32f82254013cb9";
 
         // When
-        ResponseEntity<String> stringResponseEntity = educationController.deleteEducation(authorization, educationId);
+        ResponseEntity<String> stringResponseEntity = educationController.deleteEducation(educationId);
 
         // Then
         assertEquals(HttpStatus.OK, stringResponseEntity.getStatusCode());

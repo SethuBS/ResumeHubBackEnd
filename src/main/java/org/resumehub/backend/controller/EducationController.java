@@ -40,7 +40,7 @@ public class EducationController {
     }
 
     @DeleteMapping("{id}")
-    ResponseEntity<String> deleteEducation(@Validated @RequestHeader("Authorization") String jwt, @PathVariable("id") String educationId) {
+    ResponseEntity<String> deleteEducation(@PathVariable("id") String educationId) {
         educationService.deleteEducation(educationId);
         return ResponseEntity.ok("Education deleted successful");
     }

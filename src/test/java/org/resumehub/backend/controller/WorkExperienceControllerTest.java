@@ -17,13 +17,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class WorkExperienceControllerTest {
 
     private final String authorization = "eyJhbGciOiJIUzM4NCJ9.eyJpYXQiOjE3MTU1NTA3OTEsImV4cCI6MTcxNTYzNzE5MSwiZW1haWwiOiJzZXRodXNlcmdlQHlhaG9vLmNvbSIsImF1dGhvcml0aWVzIjoiIn0.lGi6KXPSEmlrpSUaAEpWc6nbek8idH_JXUpMIDDmZ72QmGzVPqJXHgJW4hPlpt3Z";
-    List<String> skills = Arrays.asList(
+    final List<String> skills = Arrays.asList(
             "Java",
             "Microservices",
             "Spring Framework",
@@ -32,7 +31,7 @@ public class WorkExperienceControllerTest {
             "Github"
 
     );
-    List<String> responsibilities = Arrays.asList(
+    final List<String> responsibilities = Arrays.asList(
             "Executed full software development life cycle (SDLC).",
             "Developed flowcharts, layouts, and documentation to identify requirements and solutions.",
             "Wrote well-designed, testable code.",
@@ -107,7 +106,7 @@ public class WorkExperienceControllerTest {
         when(workExperienceService.getWorkExperienceById(workExperience.getId())).thenReturn(workExperience);
 
         // Call the Controller method
-        ResponseEntity<WorkExperienceDTO> workExperienceDtoResponseEntity = workExperienceController.getWorkExperienceById(authorization, workExperience.getId());
+        ResponseEntity<WorkExperienceDTO> workExperienceDtoResponseEntity = workExperienceController.getWorkExperienceById(workExperience.getId());
 
         // Verify the response entity
         assertEquals(HttpStatus.OK, workExperienceDtoResponseEntity.getStatusCode());
@@ -123,7 +122,7 @@ public class WorkExperienceControllerTest {
         when(workExperienceService.getWorkExperienceById(workExperienceId)).thenThrow(new ResourceNotFoundException("Work Experience not found"));
 
         // Call the controller method and assert that ResourceNotFundException is thrown
-        assertThrows(ResourceNotFoundException.class, () -> workExperienceController.getWorkExperienceById(authorization, workExperienceId));
+        assertThrows(ResourceNotFoundException.class, () -> workExperienceController.getWorkExperienceById(workExperienceId));
 
     }
 

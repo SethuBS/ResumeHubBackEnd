@@ -24,4 +24,5 @@ public class PasswordResetToken {
         this.tokenExpiry = tokenExpiry;
         this.userId = userId;
     }
+
 }

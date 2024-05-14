@@ -23,8 +23,7 @@ public class WorkExperienceController {
     }
 
     @GetMapping("{id}")
-    ResponseEntity<WorkExperienceDTO> getWorkExperienceById(@Validated @RequestHeader("Authorization") String jwt,
-                                                            @PathVariable("id") String workExperienceId) {
+    ResponseEntity<WorkExperienceDTO> getWorkExperienceById(@PathVariable("id") String workExperienceId) {
         return ResponseEntity.ok(workExperienceService.getWorkExperienceById(workExperienceId));
     }
 
