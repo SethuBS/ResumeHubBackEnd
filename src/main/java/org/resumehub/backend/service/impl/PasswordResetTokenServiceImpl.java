@@ -10,8 +10,10 @@ import org.resumehub.backend.repository.PasswordResetTokenRepository;
 import org.resumehub.backend.service.PasswordResetTokenService;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -22,12 +24,40 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
 
     private final PasswordResetTokenRepository passwordResetTokenRepository;
 
+    private Date twentyFourHoursAgo() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.HOUR_OF_DAY, -24);
+        return calendar.getTime();
+    }
+
+    private PasswordResetTokenDTO checkExistingToken(String userId) {
+        Date twentyFourHoursAgo = twentyFourHoursAgo();
+        List<PasswordResetToken> existingTokens = passwordResetTokenRepository.findAllByUserId(userId);
+        if (existingTokens != null) {
+            return existingTokens.stream()
+                    .filter(token -> token.getTokenExpiry().after(twentyFourHoursAgo))
+                    .findFirst()
+                    .map(Mapper::mapToDto)
+                    .orElse(null);
+        }
+        return null;
+    }
+
     @Override
     public PasswordResetTokenDTO generateResetToken(String userId) {
         String token = UUID.randomUUID().toString();
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, 1);
         Date expiryDate = calendar.getTime();
+
+        // Check if there's an existing token that is less than 24 hours
+        String formattedDate;
+        var existingToken = checkExistingToken(userId);
+        if (existingToken != null) {
+            formattedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(existingToken.getTokenExpiry());
+            logger.info("You attempted to reset password at: {}. Existing token is less than 24 hours. Not generating new token.You will use the existing token: {}", formattedDate, existingToken.getResetToken());
+            return existingToken;
+        }
 
         var newResetToken = new PasswordResetToken(
                 token,
