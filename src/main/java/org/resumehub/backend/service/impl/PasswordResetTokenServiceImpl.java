@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.resumehub.backend.dto.PasswordResetTokenDTO;
 import org.resumehub.backend.entity.PasswordResetToken;
+import org.resumehub.backend.exception.ResourceNotFoundException;
 import org.resumehub.backend.map.Mapper;
 import org.resumehub.backend.repository.PasswordResetTokenRepository;
 import org.resumehub.backend.service.PasswordResetTokenService;
@@ -73,6 +74,9 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
     @Override
     public PasswordResetTokenDTO getResetToken(String resetToken) {
         var token = passwordResetTokenRepository.findByResetToken(resetToken);
+        if (token == null) {
+            throw new ResourceNotFoundException("The token is not found, please double check your token.");
+        }
         logger.info("getResetToken Token: {}", token);
         return Mapper.mapToDto(token);
     }

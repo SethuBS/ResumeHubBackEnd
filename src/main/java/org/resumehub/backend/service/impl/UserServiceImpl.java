@@ -75,8 +75,7 @@ public class UserServiceImpl implements UserService {
         var username = loginDTO.getEmail();
         var password = loginDTO.getPassword();
 
-        var maskedPassword = "*".repeat(password.length());
-        logger.info("User credentials: {}", username + " " + maskedPassword);
+        logger.info("User credentials: {}", username + " " + password);
 
         var authentication = authenticate(username, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -88,8 +87,7 @@ public class UserServiceImpl implements UserService {
         authResponse.setToken(token);
         authResponse.setStatus(true);
 
-        var loggedInUser = Mapper.mapToEntity(loginDTO);
-        logger.info("Logged in user: {}", loggedInUser);
+        logger.info("Logged in user: {}", loginDTO);
         return authResponse;
     }
 
@@ -104,7 +102,7 @@ public class UserServiceImpl implements UserService {
         if (!passwordEncoder.matches(password.trim(), userDetails.getPassword())) {
             logger.info("password size , userDetails.getPassword size {}, {}", password.length(), userDetails.getPassword().length());
             logger.info("Sign in userDetails - password mismatch: {}", userDetails);
-            throw new BadCredentialsException("Invalid password");
+            throw new BadCredentialsException("Invalid username or password");
         }
 
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
@@ -190,7 +188,9 @@ public class UserServiceImpl implements UserService {
         var user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User with id " + userId + " not found"));
 
-        user.setPassword(newPassword);
+        // Encode the password before saving
+        var encodedPassword = passwordEncoder.encode(newPassword);
+        user.setPassword(encodedPassword);
         userRepository.save(user);
     }
 
