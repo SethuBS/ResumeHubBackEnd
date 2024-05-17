@@ -144,7 +144,6 @@ public class UserServiceImpl implements UserService {
         // Encode the password before saving
         var encodedPassword = passwordEncoder.encode(password);
         var userRole = UserRole.ADMIN.getRole();
-        logger.info("You don't wanna know: {}", encodedPassword);
         userToBeAdded.setPassword(encodedPassword);
         userToBeAdded.setRole(userRole);
         var addedUser = userRepository.save(userToBeAdded);
