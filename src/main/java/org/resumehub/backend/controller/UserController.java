@@ -15,7 +15,7 @@ import java.util.List;
 @CrossOrigin("*")
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/v1/users/")
+@RequestMapping("/api/v1/users")
 public class UserController {
 
     private static final Logger logger = LogManager.getLogger(UserController.class);
@@ -26,7 +26,7 @@ public class UserController {
     public ResponseEntity<UserDTO> getUserProfile(@RequestHeader("Authorization") String jwt) {
 
         UserDTO userProfile = userService.findUserProfileByJwt(jwt);
-        userProfile.setPassword(null);
+        userProfile.setPassword("*".repeat(userProfile.getPassword().length()));
         logger.info("User profile details: {}", userProfile);
         return new ResponseEntity<>(userProfile, HttpStatus.OK);
     }

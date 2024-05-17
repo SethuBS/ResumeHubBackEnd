@@ -1,5 +1,6 @@
 package org.resumehub.backend.SecurityConfig;
 
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -43,7 +44,16 @@ public class JwtProvider {
     }
 
     public static String getEmailFromJwtToken(String jwt) {
-        Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
-        return claims.get("email").toString();
+        jwt = jwt.substring(7); // Assuming "Bearer " is removed from the token
+        try {
+            Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
+            //Claims claims = Jwts.parser().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
+            String email = String.valueOf(claims.get("email"));
+            logger.info("Email extracted from JWT:{}", claims);
+            return email;
+        } catch (Exception e) {
+            logger.error("Error extracting email from JWT: {}" , e.getMessage());
+            return null;
+        }
     }
 }

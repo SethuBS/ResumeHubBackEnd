@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
 
     private Authentication authenticate(String username, String password) {
 
-        logger.info("Username: {} Password: {}", username, password);
+        logger.info("Username: {} Password: {}", username, "*".repeat(password.length()));
 
         var userDetails = loadUserByUsername(username);
 
@@ -114,8 +114,7 @@ public class UserServiceImpl implements UserService {
         var listOfUsers = userRepository.findAll()
                 .stream().map(Mapper::mapToDto)
                 .collect(Collectors.toList());
-        // Mask the passwords before logging
-        listOfUsers.forEach(userDto -> userDto.setPassword(userDto.getMaskedPassword()));
+        listOfUsers.forEach(userDTO -> userDTO.setPassword("*".repeat(userDTO.getPassword().length())));
         logger.info("List of users: {}", listOfUsers);
         return listOfUsers;
     }
@@ -125,6 +124,7 @@ public class UserServiceImpl implements UserService {
         var oneRecordOfUser = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User with given id: " + userId + " does not exist in the system"));
 
+        oneRecordOfUser.setPassword("*".repeat(oneRecordOfUser.getPassword().length()));
         logger.info("One record of user: {}", oneRecordOfUser);
         return Mapper.mapToDto(oneRecordOfUser);
     }
@@ -158,9 +158,7 @@ public class UserServiceImpl implements UserService {
         authResponse.setToken(token);
         authResponse.setMessage("Register Success");
         authResponse.setStatus(true);
-
-        // Mask the passwords before logging
-        addedUser.setPassword(addedUser.getMaskedPassword());
+        addedUser.setPassword("*".repeat(addedUser.getPassword().length()));
         logger.info("Saved record of User: {}", addedUser);
 
         return Mapper.mapToDto(addedUser);
@@ -178,8 +176,8 @@ public class UserServiceImpl implements UserService {
         oneRecordOfExistingUser.setRole(userRole);
         oneRecordOfExistingUser.setPassword(encodedPassword);
         userRepository.save(oneRecordOfExistingUser);
+        oneRecordOfExistingUser.setPassword("*".repeat(oneRecordOfExistingUser.getPassword().length()));
         logger.info("Updated record of personal information: {}", oneRecordOfExistingUser);
-
         return Mapper.mapToDto(oneRecordOfExistingUser);
     }
 
@@ -205,9 +203,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(String userId) {
-        userRepository.findById(userId)
+        var deleted = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User with given id: " + userId + " does not exist in the system"));
-        logger.info("Deleted record of user: {}", userRepository.findById(userId));
+        deleted.setPassword("*".repeat(deleted.getPassword().length()));
+        logger.info("Deleted record of user: {}", deleted);
         userRepository.deleteById(userId);
 
     }
