@@ -106,7 +106,7 @@ public class WorkExperienceControllerTest {
         when(workExperienceService.getWorkExperienceById(workExperience.getId())).thenReturn(workExperience);
 
         // Call the Controller method
-        ResponseEntity<WorkExperienceDTO> workExperienceDtoResponseEntity = workExperienceController.getWorkExperienceById(workExperience.getId());
+        ResponseEntity<WorkExperienceDTO> workExperienceDtoResponseEntity = workExperienceController.getWorkExperienceById(authorization, workExperience.getId());
 
         // Verify the response entity
         assertEquals(HttpStatus.OK, workExperienceDtoResponseEntity.getStatusCode());
@@ -122,7 +122,7 @@ public class WorkExperienceControllerTest {
         when(workExperienceService.getWorkExperienceById(workExperienceId)).thenThrow(new ResourceNotFoundException("Work Experience not found"));
 
         // Call the controller method and assert that ResourceNotFundException is thrown
-        assertThrows(ResourceNotFoundException.class, () -> workExperienceController.getWorkExperienceById(workExperienceId));
+        assertThrows(ResourceNotFoundException.class, () -> workExperienceController.getWorkExperienceById(authorization, workExperienceId));
 
     }
 

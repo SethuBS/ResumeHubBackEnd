@@ -23,7 +23,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/profile")
-    public ResponseEntity<UserDTO> getUserProfile(@RequestHeader("Authorization") String jwt) {
+    public ResponseEntity<UserDTO> getUserProfile(@RequestHeader("authorization") String jwt) {
 
         UserDTO userProfile = userService.findUserProfileByJwt(jwt);
         userProfile.setPassword("*".repeat(userProfile.getPassword().length()));
@@ -31,28 +31,34 @@ public class UserController {
         return new ResponseEntity<>(userProfile, HttpStatus.OK);
     }
 
+    @GetMapping("/email")
+    ResponseEntity<UserDTO> getUserByEmail(@RequestHeader("authorization") String jwt, @RequestParam String email) {
+        var user = userService.getUserByEmail(email);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
     @GetMapping
-    public ResponseEntity<List<UserDTO>> findAll(@RequestHeader("Authorization") String jwt) {
+    public ResponseEntity<List<UserDTO>> findAll(@RequestHeader("authorization") String jwt) {
         return ResponseEntity.ok(userService.findAll());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<UserDTO> findById(@Validated @RequestHeader("Authorization") String jwt, @PathVariable("id") String userId) {
+    public ResponseEntity<UserDTO> findById(@Validated @RequestHeader("authorization") String jwt, @PathVariable("id") String userId) {
         return ResponseEntity.ok(userService.findById(userId));
     }
 
     @PostMapping
-    public void create(@Validated @RequestHeader("Authorization") String jwt, @RequestBody UserDTO newUser) {
+    public void create(@Validated @RequestHeader("authorization") String jwt, @RequestBody UserDTO newUser) {
         ResponseEntity.ok(userService.create(newUser));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<UserDTO> update(@Validated @RequestHeader("Authorization") String jwt, @PathVariable("id") String userId, @RequestBody UserDTO updatedUser) {
+    public ResponseEntity<UserDTO> update(@Validated @RequestHeader("authorization") String jwt, @PathVariable("id") String userId, @RequestBody UserDTO updatedUser) {
         return ResponseEntity.ok(userService.update(userId, updatedUser));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<String> delete(@Validated @RequestHeader("Authorization") String jwt, @PathVariable("id") String userId) {
+    public ResponseEntity<String> delete(@Validated @RequestHeader("authorization") String jwt, @PathVariable("id") String userId) {
         userService.delete(userId);
         return ResponseEntity.ok("User deleted successful");
     }

@@ -51,6 +51,24 @@ public class UserControllerTest {
         assertEquals(expectedUserProfile, userProfile);
     }
 
+    @Test
+    void testGetUserByEmail() {
+        String jwt = "sampleJwtToken";
+        var userByEmail = new UserDTO(
+                "663fb95b364adc66334cb83a",
+                "Sethu Serge Budaza",
+                "sethuserge@gmail.com",
+                "sethuserge@gmail.com",
+                "ROLE_CUSTOMER"
+        );
+
+        when(userService.getUserByEmail(userByEmail.getEmail())).thenReturn(userByEmail);
+
+        UserDTO userProfileByEmail = userController.getUserByEmail(jwt, userByEmail.getEmail()).getBody();
+
+        assertEquals(userByEmail, userProfileByEmail);
+    }
+
 
     @Test
     public void testFindAll() {

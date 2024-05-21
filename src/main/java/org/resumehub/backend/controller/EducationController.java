@@ -18,22 +18,22 @@ public class EducationController {
     private final EducationService educationService;
 
     @GetMapping
-    public ResponseEntity<List<EducationDTO>> getAllEducation(@RequestHeader("Authorization") String jwt) {
+    public ResponseEntity<List<EducationDTO>> getAllEducation(@RequestHeader("authorization") String jwt) {
         return ResponseEntity.ok(educationService.getAllEducation());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<EducationDTO> getEducationById(@Validated @RequestHeader("Authorization") String jwt, @PathVariable("id") String educationId) {
+    public ResponseEntity<EducationDTO> getEducationById(@Validated @RequestHeader("authorization") String jwt, @PathVariable("id") String educationId) {
         return ResponseEntity.ok(educationService.getEducationById(educationId));
     }
 
     @PostMapping
-    public ResponseEntity<EducationDTO> createEducation(@Validated @RequestHeader("Authorization") String jwt, @RequestBody EducationDTO newEducation) {
+    public ResponseEntity<EducationDTO> createEducation(@Validated @RequestHeader("authorization") String jwt, @RequestBody EducationDTO newEducation) {
         return ResponseEntity.ok(educationService.createEducation(newEducation));
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<EducationDTO> updateEducation(@Validated @RequestHeader("Authorization") String jwt,
+    public ResponseEntity<EducationDTO> updateEducation(@Validated @RequestHeader("authorization") String jwt,
                                                         @PathVariable("id")
                                                         @RequestBody String educationId, EducationDTO updatedEducation) {
         return ResponseEntity.ok(educationService.updateEducation(educationId, updatedEducation));

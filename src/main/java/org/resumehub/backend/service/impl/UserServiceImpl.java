@@ -148,7 +148,7 @@ public class UserServiceImpl implements UserService {
         userToBeAdded.setRole(userRole);
         var addedUser = userRepository.save(userToBeAdded);
         // Welcome email
-        emailService.sendEmail(addedUser.getEmail(), emailConfiguration.getEmailSubject(), addedUser.getFullName(), emailConfiguration.getEmailBody());
+        emailService.sendEmail(addedUser.getEmail(), emailConfiguration.geWelcomeEmailSubject(), addedUser.getFullName(), emailConfiguration.getWelcomeEmailBody());
         Authentication authentication = new UsernamePasswordAuthenticationToken(addedUser.getEmail(), addedUser.getEmail());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         var token = JwtProvider.generateToken(authentication);

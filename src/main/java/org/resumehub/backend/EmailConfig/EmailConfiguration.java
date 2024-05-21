@@ -22,11 +22,19 @@ public class EmailConfiguration {
         }
     }
 
-    public String getEmailSubject() {
-        return props.getProperty("email.subject");
+    public String geWelcomeEmailSubject() {
+        return props.getProperty("email.welcome.subject");
     }
 
-    public String getEmailBody() {
-        return props.getProperty("email.body");
+    public String getWelcomeEmailBody() {
+        return props.getProperty("email.welcome.body");
+    }
+
+    public String getResetPasswordSubject() {
+        return props.getProperty("email.resetPassword.subject");
+    }
+
+    public String getResetPasswordBody() {
+        return props.getProperty("email.resetPassword.body");
     }
 }

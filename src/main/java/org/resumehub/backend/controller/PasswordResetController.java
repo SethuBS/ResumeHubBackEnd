@@ -1,6 +1,9 @@
 package org.resumehub.backend.controller;
 
 import lombok.AllArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.resumehub.backend.EmailConfig.EmailConfiguration;
 import org.resumehub.backend.service.EmailService;
 import org.resumehub.backend.service.PasswordResetTokenService;
 import org.resumehub.backend.service.UserService;
@@ -16,11 +19,15 @@ import java.util.Map;
 @RequestMapping("/recovery")
 public class PasswordResetController {
 
+    private static final Logger logger = LogManager.getLogger(PasswordResetController.class);
+
     private final UserService userService;
 
     private final PasswordResetTokenService passwordResetTokenService;
 
-    private EmailService emailService;
+    private final EmailService emailService;
+
+    private final EmailConfiguration emailConfiguration;
 
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@Validated @RequestBody Map<String, String> email) {
@@ -28,12 +35,19 @@ public class PasswordResetController {
         var userDTO = userService.getUserByEmail(userEmail);
 
         var passwordResetToken = passwordResetTokenService.generateResetToken(userDTO.getId());
+        var resetLink = "http://localhost:3000/reset-password?token=" + passwordResetToken.getResetToken();
+
+        String body = String.format(emailConfiguration.getResetPasswordBody(), resetLink);
+
+        logger.info("Email Body: {}", body);
 
         // Send reset password token in email
-        var resetPasswordLinkToken = passwordResetToken.getResetToken();
-        emailService.sendEmail(userDTO.getEmail(),
-                "Reset Your Password - ResumeHub",
-                userDTO.getFullName(), "<body><p>Copy the following token, go to reset password page and use it to reset your password:<p/> " + resetPasswordLinkToken + " <p>Best regards,<p/><p>The ResumeHub Team<p/><body/>");
+        emailService.sendEmail(
+                userDTO.getEmail(),
+                emailConfiguration.getResetPasswordSubject(),
+                userDTO.getFullName(),
+                body
+        );
 
         return ResponseEntity.ok("Password reset token sent to your email");
     }
@@ -47,9 +61,9 @@ public class PasswordResetController {
             userService.updateUserPassword(passwordResetToken.getUserId(), newPassword);
             passwordResetTokenService.deleteResetToken(token);
             return ResponseEntity.ok("Password reset successfully");
-        } else {
-            return ResponseEntity.badRequest().body("Invalid or expired token");
         }
+
+        return ResponseEntity.badRequest().body("Invalid or expired token");
     }
 
 }
