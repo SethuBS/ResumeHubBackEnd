@@ -17,8 +17,8 @@ import java.util.Set;
 
 public class JwtProvider {
 
-    private static final Logger logger = LogManager.getLogger(JwtProvider.class);
     static final SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
+    private static final Logger logger = LogManager.getLogger(JwtProvider.class);
 
     public static String generateToken(Authentication auth) {
         Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
@@ -47,12 +47,11 @@ public class JwtProvider {
         jwt = jwt.substring(7); // Assuming "Bearer " is removed from the token
         try {
             Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
-            //Claims claims = Jwts.parser().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
             String email = String.valueOf(claims.get("email"));
             logger.info("Email extracted from JWT:{}", claims);
             return email;
         } catch (Exception e) {
-            logger.error("Error extracting email from JWT: {}" , e.getMessage());
+            logger.error("Error extracting email from JWT: {}", e.getMessage());
             return null;
         }
     }
